@@ -1,44 +1,28 @@
-const fs = require('fs')
 const mongoose = require('mongoose');
-const session = require('express-session');
-const MongoDBStore = require('connect-mongodb-session')(session);
-
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
+const cookieParser = require('cookie-parser');
+const dotenv = require('dotenv');
 
 const authRoutes = require('./routes/auth');
 
-const MONGODB_URI = fs.readFileSync('./data/databaseKey.txt', 'utf-8');
+dotenv.config();
 
 const app = express();
-const store = new MongoDBStore({
-    uri: MONGODB_URI,
-    collection: 'sessions'
-});
 
-app.use(cors());
+app.use(cors({
+    origin: "http://localhost:5173",
+    credentials: true
+}));
 app.use(express.json());
+app.use(cookieParser());
 
 app.use(bodyParser.urlencoded({ extended: false }));
 
-// app.use((req ,res, next) => {
-//     if(!req.session.user) {
-//         next();
-//     } else {
-//         User.findById(req.session.user._id)
-//         .then(user => {
-//             req.user = user;
-//             next();
-//         }).catch(err => {
-//             console.log(err);
-//         });
-//     }
-// });
-
 app.use(authRoutes);
 
-mongoose.connect(MONGODB_URI)
+mongoose.connect(process.env.MONGODB_URI)
     .then(() => {
         app.listen(3000);
     }).catch(err => {
