@@ -11,34 +11,31 @@ const userSchema = new Schema({
         type: String,
         required: true
     },
+    groups: [{
+        groupId: {
+            type: Schema.Types.ObjectId,
+            ref: 'Group',
+            required: true
+        }
+    }],
     resetToken: String,
     reserTokenExpiration: Date,
-    tasks: [
-        {
+    tasks: {
+        dailies: [{
             taskId: {
-                type: String,
-                required: true
-            },
-            name: {
-                type: String,
-                required: true
-            },
-            type: {
-                type: String,
-                required: true
-            },
-            description: {
-                type: String,
-            },
-            period: {
-                type: String
-            },
-            date: {
-                type: Date,
+                type: Schema.Types.ObjectId,
+                ref: 'Task',
                 required: true
             }
-        }
-    ]
+        }],
+        todos: [{
+            taskId: {
+                type: Schema.Types.ObjectId,
+                ref: 'Task',
+                required: true
+            }            
+        }]
+    }
 });
 
 userSchema.methods.addTask = (task) => {
