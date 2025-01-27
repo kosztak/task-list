@@ -1,9 +1,9 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
 
 import axiosInstance from "../../utils/axiosInstance";
 import Input from "../ui/Input";
 import Button from "../ui/Button";
+import PageLink from "../ui/PageLink";
 
 export default function LoginPanel() {
     const [username, setUsername] = useState('');
@@ -31,7 +31,7 @@ export default function LoginPanel() {
                 <Input type="password" value={password} onChange={handlePasswordChange} required placeholder="password" />
             </div>
             <Button onClick={handleLogin}>Login</Button>
-            <Link className="underline hover:text-amber-600" to={'/register'}>You don't have an account yet?</Link>
+            <PageLink to={'/register'}>You don't have an account yet?</PageLink>
         </div>
     );
 }
