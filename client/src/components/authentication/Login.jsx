@@ -2,11 +2,12 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 
 import axiosInstance from "../../utils/axiosInstance";
+import Input from "../ui/Input";
+import Button from "../ui/Button";
 
-export default function Login() {
+export default function LoginPanel() {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
-    const [error, setError] = useState();
 
     function handleUsernameChange(event) {
         setUsername(event.target.value);
@@ -19,19 +20,18 @@ export default function Login() {
     function handleLogin() {
         axiosInstance.post("/login", { username, password })
             .then(response => { console.log(response) })
-            .catch(err => { setError(err || 'error') })
+            .catch(err => {  })
     }
 
     return(
-        <>
-            <h1>Login</h1> <br />
-            <input type="text" value={username} onChange={handleUsernameChange} required placeholder="username" />
-            <input type="password" value={password} onChange={handlePasswordChange} required placeholder="password" />
-            <button onClick={handleLogin}>Login</button>
-            <br />
-            <Link to={'/register'}>Register</Link>
-            <br />
-            {error && <p>error</p>}
-        </>
+        <div className="flex flex-col gap-4 items-center">
+            <p className="text-center text-2xl">Login to your account</p>
+            <div className="flex flex-col gap-1 w-2/3">
+                <Input type="text" value={username} onChange={handleUsernameChange} required placeholder="username" />
+                <Input type="password" value={password} onChange={handlePasswordChange} required placeholder="password" />
+            </div>
+            <Button onClick={handleLogin}>Login</Button>
+            <Link className="underline hover:text-amber-600" to={'/register'}>You don't have an account yet?</Link>
+        </div>
     );
 }
