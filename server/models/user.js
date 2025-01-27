@@ -12,6 +12,9 @@ const userSchema = new Schema({
         type: String,
         required: true
     },
+    image : {
+        type: String
+    },
     groups: [{
         groupId: {
             type: Schema.Types.ObjectId,
@@ -19,6 +22,10 @@ const userSchema = new Schema({
             required: true
         }
     }],
+    owngroup: {
+        type: Schema.Types.ObjectId,
+        ref: 'Group'
+    },
     tasks: {
         dailies: [{
             taskId: {

@@ -1,12 +1,15 @@
 import { createBrowserRouter } from "react-router-dom";
+
 import AuthenticationPage from "../pages/AuthenticationPage";
+import DailiesPage from "../pages/DailiesPage";
+
 import LoginPanel from "../components/authentication/Login";
 import RegisterPanel from "../components/authentication/Register";
-import Header from "../components/header/Header";
+import Main from "../components/main/Main";
 
 const router = createBrowserRouter([
     {
-        path: '/',
+        path: '/auth',
         element: <AuthenticationPage />,
         children: [
             {
@@ -21,7 +24,13 @@ const router = createBrowserRouter([
     },
     {
         path: '/',
-        element: <Header />
+        element: <Main />,
+        children: [
+            {
+                index: true,
+                element: <DailiesPage />
+            }
+        ]
     }
 
 ]);
