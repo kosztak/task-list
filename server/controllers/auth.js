@@ -3,8 +3,6 @@ const jwt = require('jsonwebtoken');
 
 const User = require('../models/user');
 
-const JWT_KEY = process.env.JWT_KEY;
-
 //GET
 
 //POST
@@ -52,7 +50,7 @@ exports.postLogin = (req, res, next) => {
             bcrypt.compare(password, user.password)
                 .then(doMatch => {
                     if(doMatch) { // create token and give response
-                        const token = jwt.sign({ id: _id }, JWT_KEY);
+                        const token = jwt.sign({ id: user._id }, process.env.JWT_KEY);
                         return res.cookie("token", token, { httpOnly: true }).json();
                     } else {
                         return res.status(500).json();
@@ -76,8 +74,8 @@ exports.postValidateToken = (req, res, next) => {
     }
 
     // get the user belongs to the token
-    const decodedToken = jwt.verify(token, JWT_KEY);
-    User.findById(decodedToken)
+    const decodedToken = jwt.verify(token, process.env.JWT_KEY);
+    User.findById(decodedToken.id)
         .then(user => {
             return res.status(200).json();
         })

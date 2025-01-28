@@ -7,6 +7,8 @@ import LoginPanel from "../components/unauthenticated/Login";
 import RegisterPanel from "../components/unauthenticated/Register";
 import Main from "../components/authenticated/main/Main";
 
+import { loader as mainLoader } from "../components/authenticated/main/Main"
+
 const router = createBrowserRouter([
     {
         path: '/auth',
@@ -25,6 +27,7 @@ const router = createBrowserRouter([
     {
         path: '/',
         element: <Main />,
+        loader: mainLoader,
         children: [
             {
                 index: true,
