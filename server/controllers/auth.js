@@ -49,12 +49,11 @@ exports.postLogin = (req, res, next) => {
             }
 
             //check password
-            const {_id, ...response} = user;
             bcrypt.compare(password, user.password)
                 .then(doMatch => {
                     if(doMatch) { // create token and give response
                         const token = jwt.sign({ id: _id }, JWT_KEY);
-                        return res.cookie("token", token, { httpOnly: true }).json(response);
+                        return res.cookie("token", token, { httpOnly: true }).json();
                     } else {
                         return res.status(500).json();
                     }
@@ -80,11 +79,14 @@ exports.postValidateToken = (req, res, next) => {
     const decodedToken = jwt.verify(token, JWT_KEY);
     User.findById(decodedToken)
         .then(user => {
-            const {_id, ...response} = user;
-            return res.status(200).json(response);
+            return res.status(200).json();
         })
         .catch(err => {
-            console.log(err);
+            return res.status(500).json();
         })
 
+}
+
+exports.postLogout = (req, res, next) => {
+    res.clearCookie("token").json();
 }

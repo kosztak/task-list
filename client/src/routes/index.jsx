@@ -3,9 +3,9 @@ import { createBrowserRouter } from "react-router-dom";
 import AuthenticationPage from "../pages/AuthenticationPage";
 import DailiesPage from "../pages/DailiesPage";
 
-import LoginPanel from "../components/authentication/Login";
-import RegisterPanel from "../components/authentication/Register";
-import Main from "../components/main/Main";
+import LoginPanel from "../components/unauthenticated/Login";
+import RegisterPanel from "../components/unauthenticated/Register";
+import Main from "../components/authenticated/main/Main";
 
 const router = createBrowserRouter([
     {

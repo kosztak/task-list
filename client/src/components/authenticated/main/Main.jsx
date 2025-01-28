@@ -1,29 +1,20 @@
 import { Outlet, useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
 
 import SideBar from "../sidebar/Sidebar";
-import axiosInstance from "../../utils/axiosInstance";
-import { userActions } from "../../store/userSlice";
+import axiosInstance from "../../../utils/axiosInstance";
 
 export default function Main() {
-    const dispatch = useDispatch();
-    const user = useSelector(state => state.user);
-
     const navigate = useNavigate();
-
-    if(!user) {
-        console.log("no user");
-        
+    
+    useEffect(() => { // check if user already authorized before using the pages
         axiosInstance.post("/validate-token")
             .then(response => {
-                console.log(response);
-                
-                dispatch(userActions.changeUser(response));
             })
             .catch(err => {
                 navigate("/auth");
             })
-    }
+    }, []);
 
     return(
         <div>
