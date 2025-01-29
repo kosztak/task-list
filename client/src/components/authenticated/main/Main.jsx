@@ -18,6 +18,6 @@ export async function loader() {
             return Promise.resolve();
         })
         .catch(() => {
-            return redirect("/auth");
+            return redirect("/");
         })
 }
