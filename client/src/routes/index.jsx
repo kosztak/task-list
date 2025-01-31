@@ -11,6 +11,9 @@ import Main from "../components/authenticated/main/Main";
 import { loader as mainLoader } from "../components/authenticated/main/Main"
 import { loader as authLoader } from "../pages/AuthenticationPage";
 
+import { action as loginAction } from "../components/unauthenticated/Login";
+import NewTaskPage from "../pages/NewTaskPage";
+
 const router = createBrowserRouter([
     {
         path: '/',
@@ -19,7 +22,8 @@ const router = createBrowserRouter([
         children: [
             {
                 index: true,
-                element: <LoginPanel />
+                element: <LoginPanel />,
+                action: loginAction
             },
             {
                 path: 'register',
@@ -39,6 +43,13 @@ const router = createBrowserRouter([
             {
                 path: 'dailies',
                 element: <DailiesPage />
+            },
+            {
+                path: 'todos'
+            },
+            {
+                path: 'new-task',
+                element: <NewTaskPage />
             }
         ]
     }
