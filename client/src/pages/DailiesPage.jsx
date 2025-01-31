@@ -1,5 +1,5 @@
 export default function DailiesPage() {
     return(
-        <div></div>
+        <div className="bg-gray-900"></div>
     )
 }
