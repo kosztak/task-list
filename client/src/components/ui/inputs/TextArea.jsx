@@ -1,9 +1,12 @@
-export default function TextArea({ placeholder, ...rest }) {
+export default function TextArea({ text, name, style, ...rest }) {
     return (
-        <textarea
-            className="border-gray-600 border-2 p-1 rounded"
-            placeholder={placeholder}
-            {...rest}
-        />
+        <div className="flex flex-col" style={style}>
+            <label htmlFor={name} className="font-semibold">{text}</label>
+            <textarea
+                className="border-gray-600 border-2 p-1 rounded grow"
+                name={name}
+                {...rest}
+            />
+        </div>
     );
 }

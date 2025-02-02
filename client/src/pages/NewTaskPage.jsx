@@ -13,7 +13,7 @@ export default function NewTaskPage() {
         setIsDaily(event.target.value === "daily");
     }
     return(
-        <Form className="bg-white rounded-lg p-8 flex flex-col items-start gap-4">
+        <Form className="bg-white rounded-lg p-8 flex flex-col items-start gap-16">
             <div className="flex gap-4">
                 <RadioButton text="Daily" type="radio" name="type" value="daily" onChange={handleTypeChange} defaultChecked />
                 <RadioButton text="To-do" type="radio" name="type" value="todo" onChange={handleTypeChange} />

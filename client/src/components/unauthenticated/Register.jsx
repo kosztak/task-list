@@ -29,21 +29,21 @@ export default function RegisterPanel() {
     function handleRegister() {
         axiosInstance.post("/register", { username, password })
             .then(response => {
-                navigate('/auth');
+                navigate('/');
             })
             .catch(err => {  })
     }
 
     return(
-        <div className="flex flex-col gap-4 items-center">
+        <div className="flex flex-col gap-12 items-center">
             <p className="text-center text-3xl">Create an account</p>
             <div className="flex flex-col gap-2 w-2/3">
-                <Input type="text" value={username} onChange={handleUsernameChange} required placeholder="Username" />
-                <Input type="password" value={password} onChange={handlePasswordChange} required placeholder="Password" />
-                <Input type="password" value={passwordAgain} onChange={handlePasswordAgainChange} required placeholder="Password again" />
+                <Input type="text" value={username} onChange={handleUsernameChange} required text="Username" />
+                <Input type="password" value={password} onChange={handlePasswordChange} required text="Password" />
+                <Input type="password" value={passwordAgain} onChange={handlePasswordAgainChange} required text="Password again" />
             </div>
             <Button onClick={handleRegister}>Register</Button>
-            <PageLink to={'/auth'}>You already have an account?</PageLink>
+            <PageLink to={'/'}>You already have an account?</PageLink>
         </div>
     );
 }
