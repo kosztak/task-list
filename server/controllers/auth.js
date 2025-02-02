@@ -2,6 +2,7 @@ const bcrypt = require("bcryptjs");
 const jwt = require('jsonwebtoken');
 
 const User = require('../models/user');
+const Task = require('../models/task');
 
 //GET
 
@@ -87,4 +88,45 @@ exports.postValidateToken = (req, res, next) => {
 
 exports.postLogout = (req, res, next) => {
     res.clearCookie("token").json();
+}
+
+exports.postAddUserTask = (req, res, next) => {
+    const {name, description, date, period, gap} = req.body;
+    const decodedToken = jwt.verify(req.cookies.token, process.env.JWT_KEY);
+
+    const task = new Task({
+        ownerId: decodedToken.id,
+        ownerType: "User",
+        name,
+        date,
+        description
+    });
+
+    User.findById(decodedToken.id)
+        .then(user => {
+            if(period) {
+                task.renewel = {
+                    period,
+                    gap,
+                    done: false
+                };
+                user.tasks.dailies.push({taskId: task._id});
+            } else {
+                user.tasks.todos.push({taskId: task._id});
+            }
+
+            return user.save();
+        })
+        .then(() => {
+            console.log(task);
+            
+            return task.save();
+        })
+        .then(() => {
+            return res.status(200).json();
+        })
+        .catch(err => {
+            console.log(err);
+            return res.status(500).json();
+        });
 }

@@ -35,16 +35,13 @@ const taskSchema = new Schema({
     },
     renewel: { //only stored in dailies
         period: {
-            type: String, //day, week, month
-            required: true
+            type: String //day, week, month
         },
         gap: {
-            type: Number,
-            required: true
+            type: Number
         },
         done: {
-            type: Boolean,
-            required: true
+            type: Boolean
         }
     }
 })

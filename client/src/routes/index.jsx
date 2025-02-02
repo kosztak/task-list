@@ -2,6 +2,7 @@ import { createBrowserRouter } from "react-router-dom";
 
 import AuthenticationPage from "../pages/AuthenticationPage";
 import DailiesPage from "../pages/DailiesPage";
+import TodosPage from "../pages/TodosPage";
 import UserInfoPage from "../pages/UserInfoPage";
 import LoginPanel from "../components/unauthenticated/Login";
 import RegisterPanel from "../components/unauthenticated/Register";
@@ -13,6 +14,7 @@ import { loader as authLoader } from "../pages/AuthenticationPage";
 
 import { action as loginAction } from "../components/unauthenticated/Login";
 import { action as registerAction } from "../components/unauthenticated/Register";
+import { action as newTaskAction } from "../pages/NewTaskPage";
 
 const router = createBrowserRouter([
     {
@@ -46,11 +48,13 @@ const router = createBrowserRouter([
                 element: <DailiesPage />
             },
             {
-                path: 'todos'
+                path: 'todos',
+                element: <TodosPage />
             },
             {
                 path: 'new-task',
-                element: <NewTaskPage />
+                element: <NewTaskPage />,
+                action: newTaskAction
             }
         ]
     }
