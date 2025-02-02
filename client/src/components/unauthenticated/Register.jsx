@@ -1,5 +1,4 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { redirect, Form } from "react-router-dom";
 
 import axiosInstance from "../../utils/axiosInstance";
 
@@ -8,42 +7,28 @@ import Button from "../ui/inputs/Button";
 import PageLink from "../ui/PageLink";
 
 export default function RegisterPanel() {
-    const [username, setUsername] = useState('');
-    const [password, setPassword] = useState('');
-    const [passwordAgain, setPasswordAgain] = useState('');
-
-    const navigate = useNavigate();
-
-    function handleUsernameChange(event) {
-        setUsername(event.target.value);
-    }
-
-    function handlePasswordChange(event) {
-        setPassword(event.target.value);
-    }
-
-    function handlePasswordAgainChange(event) {
-        setPasswordAgain(event.target.value);
-    }
-
-    function handleRegister() {
-        axiosInstance.post("/register", { username, password })
-            .then(response => {
-                navigate('/');
-            })
-            .catch(err => {  })
-    }
-
     return(
-        <div className="flex flex-col gap-12 items-center">
+        <Form method="POST" className="flex flex-col gap-12 items-center">
             <p className="text-center text-3xl">Create an account</p>
             <div className="flex flex-col gap-2 w-2/3">
-                <Input type="text" value={username} onChange={handleUsernameChange} required text="Username" />
-                <Input type="password" value={password} onChange={handlePasswordChange} required text="Password" />
-                <Input type="password" value={passwordAgain} onChange={handlePasswordAgainChange} required text="Password again" />
+                <Input type="text" name="username" required text="Username" />
+                <Input type="password" name="password" required text="Password" />
+                <Input type="password" name="password-again" required text="Password again" />
             </div>
-            <Button onClick={handleRegister}>Register</Button>
+            <Button>Register</Button>
             <PageLink to={'/'}>You already have an account?</PageLink>
-        </div>
+        </Form>
     );
+}
+
+export async function action({ request, params }) {
+    const data = await request.formData();
+
+    return axiosInstance.post("/register", { username: data.get('username'), password: data.get('password') })
+    .then(response => {
+        return redirect('/');
+    })
+    .catch(err => { 
+        return Promise.resolve();
+    })
 }

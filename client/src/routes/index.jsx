@@ -3,16 +3,16 @@ import { createBrowserRouter } from "react-router-dom";
 import AuthenticationPage from "../pages/AuthenticationPage";
 import DailiesPage from "../pages/DailiesPage";
 import UserInfoPage from "../pages/UserInfoPage";
-
 import LoginPanel from "../components/unauthenticated/Login";
 import RegisterPanel from "../components/unauthenticated/Register";
 import Main from "../components/authenticated/main/Main";
+import NewTaskPage from "../pages/NewTaskPage";
 
 import { loader as mainLoader } from "../components/authenticated/main/Main"
 import { loader as authLoader } from "../pages/AuthenticationPage";
 
 import { action as loginAction } from "../components/unauthenticated/Login";
-import NewTaskPage from "../pages/NewTaskPage";
+import { action as registerAction } from "../components/unauthenticated/Register";
 
 const router = createBrowserRouter([
     {
@@ -27,7 +27,8 @@ const router = createBrowserRouter([
             },
             {
                 path: 'register',
-                element: <RegisterPanel />
+                element: <RegisterPanel />,
+                action: registerAction
             }
         ]
     },
