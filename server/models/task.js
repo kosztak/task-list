@@ -14,7 +14,13 @@ const Schema = mongoose.Schema;
 const taskSchema = new Schema({
     ownerId: {
         type: Schema.Types.ObjectId,
+        refPath: 'ownerType',
         required: true
+    },
+    ownerType: {
+        type: String,
+        required: true,
+        enum: ['User', 'Group']
     },
     name: {
         type: String,
@@ -29,10 +35,16 @@ const taskSchema = new Schema({
     },
     renewel: { //only stored in dailies
         period: {
-            type: String //day, week, month
+            type: String, //day, week, month
+            required: true
+        },
+        gap: {
+            type: Number,
+            required: true
         },
         done: {
-            type: Boolean
+            type: Boolean,
+            required: true
         }
     }
 })

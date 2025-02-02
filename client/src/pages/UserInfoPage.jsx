@@ -1,6 +1,6 @@
 export default function UserInfoPage() {
     return(
-        <div style={{ gridArea: "content" }}>
+        <div>
             <p>User Info Page</p>
         </div>
     );

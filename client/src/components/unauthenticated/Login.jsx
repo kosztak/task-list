@@ -3,8 +3,8 @@ import { Form, redirect, useNavigate } from "react-router-dom";
 
 import axiosInstance from "../../utils/axiosInstance";
 
-import Input from "../ui/Input";
-import Button from "../ui/Button";
+import Input from "../ui/inputs/Input";
+import Button from "../ui/inputs/Button";
 import PageLink from "../ui/PageLink";
 
 export default function LoginPanel() {
