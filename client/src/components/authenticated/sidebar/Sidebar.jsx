@@ -1,4 +1,4 @@
-import { NavLink } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 
 import NavButton from "./NavButton";
 
@@ -8,9 +8,21 @@ import groupPic from "../../../assets/sidepanel-icons/group.png";
 import newTaskPic from "../../../assets/sidepanel-icons/new-task.png";
 import logoutPic from "../../../assets/sidepanel-icons/logout.png";
 import profilePic from "../../../assets/sidepanel-icons/profile.png";
+import axiosInstance from "../../../utils/axiosInstance";
 
 export default function SideBar() {
+    const navigate = useNavigate();
     const defaultNewTaskCSS = "relative left-16";
+
+    function handleLogout() {
+        axiosInstance.post("/logout")
+        .then(response => {
+            navigate("/");
+        })
+        .catch(err => {
+            console.error(err);
+        });
+    }
 
     return(
         <div className="sticky top-0 p-4 h-screen w-32 bg-amber-300 rounded-r-lg flex flex-col items-center justify-between" style={{ gridArea: "sidebar" }}>
@@ -33,7 +45,9 @@ export default function SideBar() {
                 </div>
             </div>
             {/* logout button */}
-            <img src={logoutPic} alt="Logout icon" className="w-12 h-12" />
+            <button onClick={handleLogout}>
+                <img src={logoutPic} alt="Logout icon" className="w-12 h-12" />
+            </button>
         </div>
     );
 }
