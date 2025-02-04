@@ -6,6 +6,7 @@ const cookieParser = require('cookie-parser');
 const dotenv = require('dotenv');
 
 const authRoutes = require('./routes/auth');
+const userRoutes = require('./routes/user');
 
 dotenv.config();
 
@@ -21,6 +22,7 @@ app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use(authRoutes);
+app.use('/user', userRoutes);
 
 mongoose.connect(process.env.MONGODB_URI)
     .then(() => {

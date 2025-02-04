@@ -37,7 +37,7 @@ export async function action({ request, params }) {
         gap: data.get('gap')
     }
 
-    return axiosInstance.post("/add-user-task", body)
+    return axiosInstance.post("/user/add-task", body)
         .then(response => {
             return redirect('/user/dailies');
         })

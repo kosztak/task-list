@@ -11,6 +11,8 @@ import NewTaskPage from "../pages/NewTaskPage";
 
 import { loader as mainLoader } from "../components/authenticated/main/Main"
 import { loader as authLoader } from "../pages/AuthenticationPage";
+import { loader as userDailiesLoader } from "../pages/DailiesPage";
+import { loader as userTodosLoader } from "../pages/TodosPage";
 
 import { action as loginAction } from "../components/unauthenticated/Login";
 import { action as registerAction } from "../components/unauthenticated/Register";
@@ -45,11 +47,13 @@ const router = createBrowserRouter([
             },
             {
                 path: 'dailies',
-                element: <DailiesPage />
+                element: <DailiesPage />,
+                loader: userDailiesLoader
             },
             {
                 path: 'todos',
-                element: <TodosPage />
+                element: <TodosPage />,
+                loader: userTodosLoader
             },
             {
                 path: 'new-task',

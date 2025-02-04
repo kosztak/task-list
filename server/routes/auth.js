@@ -11,6 +11,5 @@ router.post("/register", authController.postRegister);
 router.post("/login", authController.postLogin);
 router.post("/validate-token", authController.postValidateToken);
 router.post("/logout", authController.postLogout);
-router.post("/add-user-task", authController.postAddUserTask);
 
 module.exports = router;

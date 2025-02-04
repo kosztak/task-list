@@ -28,18 +28,14 @@ const userSchema = new Schema({
     },
     tasks: {
         dailies: [{
-            taskId: {
-                type: Schema.Types.ObjectId,
-                ref: 'Task',
-                required: true
-            }
+            type: Schema.Types.ObjectId,
+            ref: 'Task',
+            required: true
         }],
         todos: [{
-            taskId: {
-                type: Schema.Types.ObjectId,
-                ref: 'Task',
-                required: true
-            }            
+            type: Schema.Types.ObjectId,
+            ref: 'Task',
+            required: true         
         }]
     }
 });

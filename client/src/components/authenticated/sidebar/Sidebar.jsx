@@ -25,7 +25,7 @@ export default function SideBar() {
     }
 
     return(
-        <div className="sticky top-0 p-4 h-screen w-32 bg-amber-300 rounded-r-lg flex flex-col items-center justify-between" style={{ gridArea: "sidebar" }}>
+        <div className="sticky top-0 left-0 p-4 h-screen w-32 bg-amber-300 rounded-r-lg flex flex-col items-center justify-between" style={{ gridArea: "sidebar" }}>
             <div className="flex flex-col items-center gap-2">
                 {/* profile button */}
                 <NavLink to={"/user"} end className={({ isActive }) => isActive? "border-4 border-amber-600 rounded-full [&>*]:w-16 [&>*]:h-16" : ""}>
@@ -40,7 +40,7 @@ export default function SideBar() {
                 {/* navigation panel */}
                 <div className="flex flex-col items-center">
                     <NavButton to={"/user/dailies"} text="Dailies" picture={dailiesPic} />
-                    <NavButton to={"/user/todos"} text="To Do's" picture={todosPic} />
+                    <NavButton to={"/user/todos"} text="To-Dos" picture={todosPic} />
                     <NavButton to={"/user/groups"} text="Groups" picture={groupPic} />
                 </div>
             </div>
