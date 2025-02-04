@@ -35,8 +35,8 @@ export default function TaskBar({ name, description, date, color, onCheck, check
         <div className="flex items-stretch">
             <div className={`${button} p-4 rounded-l-lg flex items-center`}>
                 {checked ?
-                    <div className="bg-gray-100 h-12 w-12 rounded-full border-4 border-gray-300">
-                        <img src={tickPic} alt="tick" className={`h-8 w-8 m-auto ${!checked && "invisible"}`} />
+                    <div className="bg-gray-100 h-12 w-12 rounded-full p-1 border-4 border-gray-300">
+                        <img src={tickPic} alt="tick" className="h-8 w-8" />
                     </div> :
                     <button onClick={onCheck} className={`bg-gray-100 h-12 w-12 rounded-full border-4 border-gray-300 ${!checked && "[&>*]:hover:visible"}`}>
                         <img src={tickPic} alt="tick" className={`h-8 w-8 m-auto ${!checked && "invisible"}`} />

@@ -18,7 +18,7 @@ export default function TodoBar({ task }) {
     }
 
     function handleCheck() {
-        axiosInstance.post("/user/check-todo", { taskId: task._id })
+        axiosInstance.post("/user/delete-todo", { taskId: task._id })
             .then(() => {
                 navigate("");
             })
