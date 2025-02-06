@@ -7,9 +7,6 @@ const Schema = mongoose.Schema;
 
     The difference between todo and daily tasks is the renewel property.
     If there's no renewel data in a task, than it is a todo.
-
-    In case of the task is a todo, the date property is the date of creation of the task.
-    If the task is a daily, then the date property is the date of the renewel of the period.
 */
 const taskSchema = new Schema({
     ownerId: {
@@ -26,12 +23,12 @@ const taskSchema = new Schema({
         type: String,
         required: true
     },
-    date: {
-        type: Date,
-        required: true
-    },
     description: {
         type: String
+    },
+    date: { //in todos this is the due date  of the task, in dailies this is the start dateof the period
+        type: Date,
+        required: true
     },
     renewel: { //only stored in dailies
         period: {
@@ -39,9 +36,6 @@ const taskSchema = new Schema({
         },
         gap: {
             type: Number
-        },
-        done: {
-            type: Boolean
         }
     }
 })

@@ -5,7 +5,7 @@ import TaskBar from "./TaskBar";
 export default function TodoBar({ task }) {
     const navigate = useNavigate();
     const dateDiff = new Date(task.date) - new Date();
-    const daysDiff = Math.floor(dateDiff / (1000 * 60 * 60 * 24));
+    const daysDiff = Math.ceil(dateDiff / (1000 * 60 * 60 * 24));
     
     let color;
 

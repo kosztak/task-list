@@ -11,6 +11,9 @@ const groupSchema = new Schema({
         type: String,
         required: true
     },
+    image: {
+        type: String,
+    },
     leader: {
         type: Schema.Types.ObjectId,
         ref: 'User',
@@ -43,6 +46,10 @@ const groupSchema = new Schema({
                     type: Schema.Types.ObjectId,
                     ref: 'User',
                     required: true
+                },
+                done: {
+                    type: Boolean,
+                    required: true
                 }
             }]
         }],
@@ -60,6 +67,10 @@ const groupSchema = new Schema({
                 userId: {
                     type: Schema.Types.ObjectId,
                     ref: 'User',
+                    required: true
+                },
+                done: {
+                    type: Boolean,
                     required: true
                 }
             }]

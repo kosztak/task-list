@@ -4,6 +4,9 @@ import DailyBar from "../components/ui/task-bars/DailyBar";
 
 export default function DailiesPage() {
     const dailiesList = useLoaderData();
+    console.log(dailiesList);
+    
+
 
     function generateDailyList() {
             return dailiesList.map(daily => {

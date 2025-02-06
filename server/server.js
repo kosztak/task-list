@@ -7,6 +7,7 @@ const dotenv = require('dotenv');
 
 const authRoutes = require('./routes/auth');
 const userRoutes = require('./routes/user');
+const dailiesStateCheck = require('./utils/dailies-state-check');
 
 dotenv.config();
 
@@ -26,7 +27,7 @@ app.use('/user', userRoutes);
 
 mongoose.connect(process.env.MONGODB_URI)
     .then(() => {
-        app.listen(3000);
+        app.listen(3000, dailiesStateCheck);
     }).catch(err => {
         console.log(err);
     });

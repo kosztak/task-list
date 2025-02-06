@@ -5,7 +5,7 @@ import TaskBar from "./TaskBar";
 export default function DailyBar({ task }) {
     const navigate = useNavigate();
     const dateDiff = new Date(task.date) - new Date();
-    const daysDiff = Math.floor(dateDiff / (1000 * 60 * 60 * 24));
+    const daysDiff = Math.ceil(dateDiff / (1000 * 60 * 60 * 24));
 
     let periodMiddlePoint;
 
@@ -27,12 +27,12 @@ export default function DailyBar({ task }) {
     
     // This is the logic to determine the color of the task bar
     let color;
-    if (task.renewel.done) {
+    if (task.done) {
         color = 'white';
     } else {
-        if (daysDiff < 0) {
+        if (daysDiff <= 0) {
             color = 'red';
-        } else if (daysDiff < (periodMiddlePoint * task.renewel.gap)) {
+        } else if (daysDiff <= (periodMiddlePoint * task.renewel.gap)) {
             color = 'yellow';
         } else {
             color = 'green';
@@ -57,7 +57,7 @@ export default function DailyBar({ task }) {
             date={task.date.split('T')[0]}
             color={color}
             onCheck={handleCheck}
-            checked={task.renewel.done}
+            checked={task.done}
         />
     )
 }

@@ -28,9 +28,15 @@ const userSchema = new Schema({
     },
     tasks: {
         dailies: [{
-            type: Schema.Types.ObjectId,
-            ref: 'Task',
-            required: true
+            taskId: {
+                type: Schema.Types.ObjectId,
+                ref: 'Task',
+                required: true
+            },
+            done: {
+                type: Boolean,
+                required: true
+            }
         }],
         todos: [{
             type: Schema.Types.ObjectId,

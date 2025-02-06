@@ -9,9 +9,21 @@ exports.getDailies = (req, res, next) => {
     const decodedToken = jwt.verify(req.cookies.token, process.env.JWT_KEY);
 
     User.findById(decodedToken.id)
-        .populate("tasks.dailies")
+        .populate("tasks.dailies.taskId")
         .then(user => {
-            return res.status(200).json(user.tasks.dailies);
+            const daliesList = [...user.tasks.dailies];
+            const transformedDailies = daliesList.map(task => {
+                return {
+                    _id: task.taskId._id,
+                    date: dateFns.subDays(task.taskId.date, 1),
+                    description: task.taskId.description,
+                    name: task.taskId.name,
+                    renewel: task.taskId.renewel,
+                    done: task.done
+                }
+            })
+            
+            return res.status(200).json(transformedDailies);
         })
         .catch(err => {
             console.log(err);
@@ -51,10 +63,9 @@ exports.postAddTask = (req, res, next) => {
             if(period) {
                 task.renewel = {
                     period,
-                    gap,
-                    done: false
+                    gap
                 };
-                user.tasks.dailies.push(task._id);
+                user.tasks.dailies.push({ taskId: task._id, done: true });
             } else {
                 user.tasks.todos.push(task._id);
             }
@@ -101,24 +112,6 @@ exports.postCheckDaily = (req, res, next) => {
     Task.findById(taskId)
         .then(task => {
             task.renewel.done = true;
-
-            const currentDate = new Date();
-
-            do {
-                switch (task.renewel.period) {
-                    case "day":
-                        task.date = dateFns.addDays(task.date, task.renewel.gap);
-                        break;
-                    case "week":
-                        task.date = dateFns.addWeeks(task.date, task.renewel.gap);
-                        break;
-                    case "month":
-                        task.date = dateFns.addMonths(task.date, task.renewel.gap);
-                        break;
-                    default:
-                        task.date = task.date;
-                }
-            } while (task.date < currentDate);
 
             return task.save();
         }).then(() => {
