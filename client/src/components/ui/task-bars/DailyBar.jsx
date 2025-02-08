@@ -52,6 +52,7 @@ export default function DailyBar({ task }) {
 
     return (
         <TaskBar
+            id={task._id}
             name={task.name}
             description={task.description}
             date={task.date.split('T')[0]}

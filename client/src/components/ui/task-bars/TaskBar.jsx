@@ -29,7 +29,7 @@ function getColorClasses(color) {
     };
 };
 
-export default function TaskBar({ name, description, date, color, onCheck, checked }) {
+export default function TaskBar({ id, name, description, date, color, onCheck, checked }) {
     const { button, link } = getColorClasses(color);
     return (
         <div className="flex items-stretch">
@@ -43,7 +43,7 @@ export default function TaskBar({ name, description, date, color, onCheck, check
                     </button>
                 }
             </div>
-            <Link className={`${link} p-4 rounded-r-lg flex flex-col gap-2 grow`}>
+            <Link to={id} className={`${link} p-4 rounded-r-lg flex flex-col gap-2 grow`}>
                 <p className="text-2xl font-semibold text-gray-900">{name}</p>
                 <p className="text-gray-700">{description}</p>
                 <p className="text-right text-gray-500">{date}</p>

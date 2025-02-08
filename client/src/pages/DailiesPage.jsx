@@ -4,17 +4,14 @@ import DailyBar from "../components/ui/task-bars/DailyBar";
 
 export default function DailiesPage() {
     const dailiesList = useLoaderData();
-    console.log(dailiesList);
-    
-
 
     function generateDailyList() {
-            return dailiesList.map(daily => {
-                return (
-                    <DailyBar key={daily._id} task={daily} />
-                )
-            })
-        }
+        return dailiesList.map(daily => {
+            return (
+                <DailyBar key={daily._id} task={daily} />
+            )
+        })
+    }
 
     return(
         <div className="bg-white rounded-lg p-4 flex flex-col items-stretch gap-8">

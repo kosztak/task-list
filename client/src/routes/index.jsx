@@ -8,15 +8,18 @@ import LoginPanel from "../components/unauthenticated/Login";
 import RegisterPanel from "../components/unauthenticated/Register";
 import Main from "../components/authenticated/main/Main";
 import NewTaskPage from "../pages/NewTaskPage";
+import EditDailyPage from "../pages/EditDailyPage";
 
 import { loader as mainLoader } from "../components/authenticated/main/Main"
 import { loader as authLoader } from "../pages/AuthenticationPage";
 import { loader as userDailiesLoader } from "../pages/DailiesPage";
 import { loader as userTodosLoader } from "../pages/TodosPage";
+import { loader as editDailyLoader } from "../pages/EditDailyPage"
 
 import { action as loginAction } from "../components/unauthenticated/Login";
 import { action as registerAction } from "../components/unauthenticated/Register";
 import { action as newTaskAction } from "../pages/NewTaskPage";
+import { action as editDailyAction } from "../pages/EditDailyPage";
 
 const router = createBrowserRouter([
     {
@@ -49,6 +52,12 @@ const router = createBrowserRouter([
                 path: 'dailies',
                 element: <DailiesPage />,
                 loader: userDailiesLoader
+            },
+            {
+                path: 'dailies/:taskId',
+                element: <EditDailyPage />,
+                loader: editDailyLoader,
+                action: editDailyAction
             },
             {
                 path: 'todos',

@@ -94,7 +94,32 @@ exports.postDeleteTodo = (req, res, next) => {
                 return res.status(500).json();
             }
 
-            user.tasks.todos = user.tasks.todos.filter(task => task._id.toString() !== taskId);
+            user.tasks.todos = user.tasks.todos.filter(task => task.taskId.toString() !== taskId);
+            return user.save();
+        }).then(() => {
+            return Task.findByIdAndDelete(taskId);
+        }).then(() => {
+            return res.status(200).json();
+        }).catch(err => {
+            console.log(err);
+            return res.status(500).json();
+        });
+}
+
+exports.postDeleteDaily = (req, res, next) => {
+    const {taskId} = req.body;
+    const decodedToken = jwt.verify(req.cookies.token, process.env.JWT_KEY);
+    
+    console.log(req.body);
+    
+
+    User.findById(decodedToken.id)
+        .then(user => {
+            if(!user) {
+                return res.status(500).json();
+            }
+
+            user.tasks.dailies = user.tasks.dailies.filter(task => task.taskId.toString() !== taskId);
             return user.save();
         }).then(() => {
             return Task.findByIdAndDelete(taskId);
