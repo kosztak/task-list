@@ -9,17 +9,20 @@ import RegisterPanel from "../components/unauthenticated/Register";
 import Main from "../components/authenticated/main/Main";
 import NewTaskPage from "../pages/NewTaskPage";
 import EditDailyPage from "../pages/EditDailyPage";
+import EditTodoPage from "../pages/EditTodoPage";
 
 import { loader as mainLoader } from "../components/authenticated/main/Main"
 import { loader as authLoader } from "../pages/AuthenticationPage";
 import { loader as userDailiesLoader } from "../pages/DailiesPage";
 import { loader as userTodosLoader } from "../pages/TodosPage";
-import { loader as editDailyLoader } from "../pages/EditDailyPage"
+import { loader as editDailyLoader } from "../pages/EditDailyPage";
+import { loader as editTodoLoader } from "../pages/EditTodoPage";
 
 import { action as loginAction } from "../components/unauthenticated/Login";
 import { action as registerAction } from "../components/unauthenticated/Register";
 import { action as newTaskAction } from "../pages/NewTaskPage";
 import { action as editDailyAction } from "../pages/EditDailyPage";
+import { action as editTodoAction } from "../pages/EditTodoPage";
 
 const router = createBrowserRouter([
     {
@@ -63,6 +66,12 @@ const router = createBrowserRouter([
                 path: 'todos',
                 element: <TodosPage />,
                 loader: userTodosLoader
+            },
+            {
+                path: 'todos/:taskId',
+                element: <EditTodoPage />,
+                loader: editTodoLoader,
+                action: editTodoAction
             },
             {
                 path: 'new-task',

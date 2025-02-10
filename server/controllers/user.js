@@ -94,7 +94,7 @@ exports.postDeleteTodo = (req, res, next) => {
                 return res.status(500).json();
             }
 
-            user.tasks.todos = user.tasks.todos.filter(task => task.taskId.toString() !== taskId);
+            user.tasks.todos = user.tasks.todos.filter(task => task.toString() !== taskId);
             return user.save();
         }).then(() => {
             return Task.findByIdAndDelete(taskId);
@@ -109,9 +109,6 @@ exports.postDeleteTodo = (req, res, next) => {
 exports.postDeleteDaily = (req, res, next) => {
     const {taskId} = req.body;
     const decodedToken = jwt.verify(req.cookies.token, process.env.JWT_KEY);
-    
-    console.log(req.body);
-    
 
     User.findById(decodedToken.id)
         .then(user => {

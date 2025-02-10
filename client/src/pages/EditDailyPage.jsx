@@ -23,10 +23,11 @@ export default function EditDailyPage() {
                 
                 return Promise.resolve();
             })
-    }    
+    }
 
     return(
-        <div className="bg-white rounded-lg p-8 flex flex-col items-start gap-4">
+        <div className="bg-white rounded-lg p-8 flex flex-col items-start gap-8">
+            <p className="text-gray-900 text-2xl font-bold">Editing: {daily.name}</p>
             <Form method="POST"  className="flex flex-col items-start gap-16" >
                 <input type="text" name="taskId" hidden defaultValue={daily._id}/>
                 <div className="grid grid-cols-[1fr_1fr] gap-4" style={{ gridTemplateAreas: `"name description" "period description" "date gap"` }}>
@@ -41,8 +42,8 @@ export default function EditDailyPage() {
                     <Input text="Every" type="number" name="gap" min="1" defaultValue={daily.renewel.gap} style={{ gridArea: "gap" }} />
                 </div>
                 <div className="flex gap-4">
-                <Button type="submit">Save</Button>
-                <Button type="button" onClick={handleTaskDelete}>Delete</Button>
+                    <Button type="submit">Save</Button>
+                    <Button type="button" onClick={handleTaskDelete}>Delete</Button>
                 </div>
             </Form>
         </div>
@@ -50,7 +51,7 @@ export default function EditDailyPage() {
 }
 
 export async function loader({ request, params }) {
-    return axiosInstance.get(`/task/daily-data?taskId=${params.taskId}`)
+    return axiosInstance.get(`/task/user-data?taskId=${params.taskId}`)
         .then(daily => {
             return daily.data;
         })
@@ -64,11 +65,10 @@ export async function loader({ request, params }) {
 export async function action({ request, params }) {
     const data = await request.formData();
     const taskId = data.get('taskId');
-    return axiosInstance.get(`/task/daily-data?taskId=${taskId}`)
+    return axiosInstance.get(`/task/user-data?taskId=${taskId}`)
         .then(daily => {
             daily = daily.data;
-            console.log(daily);
-            
+
             const responseData = {
                 _id: daily._id,
                 ...(daily.name !== data.get('name') && {name: data.get('name')}),
