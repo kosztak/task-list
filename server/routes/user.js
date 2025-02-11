@@ -10,8 +10,8 @@ router.get("/todos", userController.getTodos);
 
 //POST
 router.post("/add-task", userController.postAddTask);
-router.post("/delete-todo", userController.postDeleteTodo);
-router.post("/delete-daily", userController.postDeleteDaily);
 router.post("/check-daily", userController.postCheckDaily);
 
+//DELETE
+router.delete("/task", userController.deleteTask);
 module.exports = router;

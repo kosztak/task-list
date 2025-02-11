@@ -84,50 +84,6 @@ exports.postAddTask = (req, res, next) => {
         });
 }
 
-exports.postDeleteTodo = (req, res, next) => {
-    const {taskId} = req.body;
-    const decodedToken = jwt.verify(req.cookies.token, process.env.JWT_KEY);
-    
-    User.findById(decodedToken.id)
-        .then(user => {
-            if(!user) {
-                return res.status(500).json();
-            }
-
-            user.tasks.todos = user.tasks.todos.filter(task => task.toString() !== taskId);
-            return user.save();
-        }).then(() => {
-            return Task.findByIdAndDelete(taskId);
-        }).then(() => {
-            return res.status(200).json();
-        }).catch(err => {
-            console.log(err);
-            return res.status(500).json();
-        });
-}
-
-exports.postDeleteDaily = (req, res, next) => {
-    const {taskId} = req.body;
-    const decodedToken = jwt.verify(req.cookies.token, process.env.JWT_KEY);
-
-    User.findById(decodedToken.id)
-        .then(user => {
-            if(!user) {
-                return res.status(500).json();
-            }
-
-            user.tasks.dailies = user.tasks.dailies.filter(task => task.taskId.toString() !== taskId);
-            return user.save();
-        }).then(() => {
-            return Task.findByIdAndDelete(taskId);
-        }).then(() => {
-            return res.status(200).json();
-        }).catch(err => {
-            console.log(err);
-            return res.status(500).json();
-        });
-}
-
 exports.postCheckDaily = (req, res, next) => {
     const {taskId} = req.body;
     
@@ -136,6 +92,34 @@ exports.postCheckDaily = (req, res, next) => {
             task.renewel.done = true;
 
             return task.save();
+        }).then(() => {
+            return res.status(200).json();
+        }).catch(err => {
+            console.log(err);
+            return res.status(500).json();
+        });
+}
+
+//DELETE
+exports.deleteTask = (req, res, next) => {
+    const {taskId, isDaily} = req.query;
+    const decodedToken = jwt.verify(req.cookies.token, process.env.JWT_KEY);
+    
+    User.findById(decodedToken.id)
+        .then(user => {
+            if(!user) {
+                return res.status(500).json();
+            }
+
+            if(isDaily) {
+                user.tasks.dailies = user.tasks.dailies.filter(task => task.taskId.toString() !== taskId);
+            } else {
+                user.tasks.todos = user.tasks.todos.filter(task => task.toString() !== taskId);
+                console.log(user.tasks.todos, taskId);
+            }
+            return user.save();
+        }).then(() => {
+            return Task.findByIdAndDelete(taskId);
         }).then(() => {
             return res.status(200).json();
         }).catch(err => {

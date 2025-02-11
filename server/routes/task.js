@@ -10,7 +10,6 @@ router.get("/user-data", taskController.getTaskData);
 //POST
 
 //PATCH
-router.patch('/daily', taskController.patchDaily);
-router.patch('/todo', taskController.patchTodo);
+router.patch('/', taskController.patchTask);
 
 module.exports = router;

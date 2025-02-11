@@ -18,24 +18,10 @@ exports.getTaskData = (req, res, next) => {
 //POST
 
 //PATCH
-exports.patchDaily = (req, res, next) => {
-    const { _id, ...daily } = req.body;
+exports.patchTask = (req, res, next) => {
+    const { _id, ...task } = req.body;
 
-    Task.findByIdAndUpdate(_id, { $set: daily })
-        .then(() => {
-            return res.status(200).json();
-        })
-        .catch(err => {
-            console.log(err);
-
-            return res.status(500).json();
-        })
-}
-
-exports.patchTodo = (req, res, next) => {
-    const { _id, ...todo } = req.body;
-
-    Task.findByIdAndUpdate(_id, { $set: todo })
+    Task.findByIdAndUpdate(_id, { $set: task })
         .then(() => {
             return res.status(200).json();
         })
