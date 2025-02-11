@@ -33,7 +33,7 @@ export default function EditTaskPage() {
                 <input type="text" name="taskId" hidden defaultValue={task._id}/>
                 <div className="grid grid-cols-[1fr_1fr] gap-4" style={{ gridTemplateAreas: `"name description" "period description" "date gap"` }}>
                     <Input type="text" name="name" text="Task Name" style={{ gridArea: "name" }} defaultValue={task.name} />
-                    <TextArea text="Task Description" name="description" style={{ gridArea: "description" }} defaultValue={{value: task.description}} />
+                    <TextArea text="Task Description" name="description" style={{ gridArea: "description" }} defaultValue={task.description} />
                     {isDaily && <Select text="Period" name="period" style={{ gridArea: "period" }} defaultValue={task.renewel.period}>
                         <Option value="day">Day</Option>
                         <Option value="week">Week</Option>
