@@ -8,8 +8,6 @@ import LoginPanel from "../components/unauthenticated/Login";
 import RegisterPanel from "../components/unauthenticated/Register";
 import Main from "../components/authenticated/main/Main";
 import NewTaskPage from "../pages/NewTaskPage";
-import EditDailyPage from "../pages/EditDailyPage";
-import EditTodoPage from "../pages/EditTodoPage";
 import EditUserTaskPage from "../pages/EditUserTaskPage";
 
 import { loader as mainLoader } from "../components/authenticated/main/Main"

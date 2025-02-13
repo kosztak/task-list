@@ -15,7 +15,7 @@ exports.postRegister = (req, res, next) => {
     User.findOne({ username })
         .then(userDoc => {
             if(userDoc) {
-                return res.status(500).json({ message: "Username already exists!" });
+                return res.status(500).json({ message: "User already exists with given username!" });
             }
 
             //save account
@@ -35,7 +35,10 @@ exports.postRegister = (req, res, next) => {
                     return res.status(200).json();
                 });
         })
-        .catch(err => { console.log(err) })
+        .catch(err => {
+            console.log(err)
+            return res.status(500).json({ message: "Couldn't register the user!" });
+        })
 }
 
 exports.postLogin = (req, res, next) => {
@@ -45,7 +48,7 @@ exports.postLogin = (req, res, next) => {
     User.findOne({ username })
         .then(user => {
             if(!user) {
-                return res.status(500).json({ message: "No account found with given username!" });
+                return res.status(500).json({ message: "No user found with given username!" });
             }
 
             //check password
@@ -55,16 +58,14 @@ exports.postLogin = (req, res, next) => {
                         const token = jwt.sign({ id: user._id }, process.env.JWT_KEY);
                         return res.cookie("token", token, { httpOnly: true }).json();
                     } else {
-                        return res.status(500).json();
+                        return res.status(500).json({ message: "Given password is incorrect!" });
                     }
                 })
-                .catch(err => {
-                    console.log(err);
-                    
-                    return res.status(500).json();
-                });
-        }).catch(err => {
+        })
+        .catch(err => {
             console.log(err);
+
+            return res.status(500).json({ message: "Couldn't authenticate the user!" });
         });
 };
 

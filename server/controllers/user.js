@@ -22,7 +22,6 @@ exports.getDailies = (req, res, next) => {
                     done: task.done
                 }
             })
-            
             return res.status(200).json(transformedDailies);
         })
         .catch(err => {
@@ -41,6 +40,7 @@ exports.getTodos = (req, res, next) => {
         })
         .catch(err => {
             console.log(err);
+            
             return res.status(500).json();
         });
 }

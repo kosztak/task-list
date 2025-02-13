@@ -6,6 +6,7 @@ exports.getTaskData = (req, res, next) => {
 
     Task.findById(taskId)
         .then(task => {
+
             return res.status(200).json(task)
         })
         .catch(err => {
@@ -28,6 +29,6 @@ exports.patchTask = (req, res, next) => {
         .catch(err => {
             console.log(err);
 
-            return res.status(500).json();
+            return res.status(500).json({ message: "Couldn't update the task!" });
         })
 }
