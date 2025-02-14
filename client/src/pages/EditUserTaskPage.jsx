@@ -13,6 +13,8 @@ import axiosInstance from "../utils/axiosInstance";
 
 let alert;
 
+let globalTask;
+
 export default function EditTaskPage() {
     const navigate = useNavigate();
     const alertRef = useRef();
@@ -22,6 +24,10 @@ export default function EditTaskPage() {
     useEffect(() => {
         alert = alertRef.current;
     }, [alertRef])
+
+    useEffect(() => {
+        globalTask = task;
+    }, [task])
 
     useEffect(() => {
         if(task === undefined) {
@@ -48,7 +54,6 @@ export default function EditTaskPage() {
                 <>
                     <p className="text-gray-900 text-2xl font-bold">Editing: {task.name}</p>
                     <Form method="POST"  className="flex flex-col items-start gap-16" >
-                        <input type="text" name="taskId" hidden defaultValue={task._id}/>
                         <div className="grid grid-cols-[1fr_1fr] gap-4" style={{ gridTemplateAreas: `"name description" "period description" "date gap"` }}>
                             <Input type="text" name="name" text="Task Name" style={{ gridArea: "name" }} defaultValue={task.name} />
                             <TextArea text="Task Description" name="description" style={{ gridArea: "description" }} defaultValue={task.description} />
@@ -85,28 +90,23 @@ export async function loader({ request, params }) {
 
 export async function action({ request, params }) {
     const data = await request.formData();
-    const taskId = data.get('taskId');
-    return axiosInstance.get(`/task/user-data?taskId=${taskId}`)
-        .then(task => {
-            task = task.data;
 
-            let responseData = {
-                _id: task._id,
-                ...(task.name !== data.get('name') && {name: data.get('name')}),
-                ...(task.description !== data.get('description') && {description: data.get('description')}),
-                ...(task.date.split('T')[0] !== data.get('date') && {date: data.get('date')})
-            }
+    let responseData = {
+        _id: globalTask._id,
+        ...(globalTask.name !== data.get('name') && {name: data.get('name')}),
+        ...(globalTask.description !== data.get('description') && {description: data.get('description')}),
+        ...(globalTask.date.split('T')[0] !== data.get('date') && {date: data.get('date')})
+    }
 
-            if(task.renewel) {
-                responseData = {
-                    ...responseData,
-                    ...((task.renewel.period !== data.get('period')) && {"renewel.period": data.get('period')}),
-                    ...((task.renewel.gap !== parseInt(data.get('gap'))) && {"renewel.gap": data.get('gap')})
-                }
-            }
+    if(globalTask.renewel) {
+        responseData = {
+            ...responseData,
+            ...((globalTask.renewel.period !== data.get('period')) && {"renewel.period": data.get('period')}),
+            ...((globalTask.renewel.gap !== parseInt(data.get('gap'))) && {"renewel.gap": data.get('gap')})
+        }
+    }
         
-            return axiosInstance.patch('/task', responseData)
-        })
+    return axiosInstance.patch('/task', responseData)
         .then(() => {
             return redirect('');
         })
