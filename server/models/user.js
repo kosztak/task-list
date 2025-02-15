@@ -16,11 +16,9 @@ const userSchema = new Schema({
         type: String
     },
     groups: [{
-        groupId: {
-            type: Schema.Types.ObjectId,
-            ref: 'Group',
-            required: true
-        }
+        type: Schema.Types.ObjectId,
+        ref: 'Group',
+        required: true
     }],
     owngroup: {
         type: Schema.Types.ObjectId,
@@ -45,17 +43,5 @@ const userSchema = new Schema({
         }]
     }
 });
-
-userSchema.methods.addTask = (task) => {
-    this.tasks = this.tasks.push(task);
-
-    return this.save();
-}
-
-userSchema.methods.deleteTask = (taskId) => {
-    this.tasks = this.tasks.filter(task => task.taskId.toString() !== taskId.toString());
-    
-    return this.save();
-}
 
 module.exports = mongoose.model('User', userSchema);

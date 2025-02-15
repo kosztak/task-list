@@ -3,6 +3,8 @@ const dateFns = require('date-fns');
 
 const User = require('../models/user');
 const Task = require('../models/task');
+const Group = require('../models/group');
+const group = require('../models/group');
 
 //GET
 exports.getDailies = (req, res, next) => {
@@ -43,6 +45,70 @@ exports.getTodos = (req, res, next) => {
             
             return res.status(500).json();
         });
+}
+
+exports.getGroups = (req, res, next) => {
+    const decodedToken = jwt.verify(req.cookies.token, process.env.JWT_KEY);
+
+    User.findById(decodedToken.id)
+        .populate("owngroup")
+        .populate("groups")
+        .then(user => {
+            const owned = {
+                name: user.owngroup.name,
+                dailies: user.owngroup.tasks.dailies.filter(task => {
+                    for(participant in task.participants) {
+                        if(participant.userId.toString() === decodedToken.id && !participant.done) {
+                            return true;
+                        }
+                    }
+                    return false;
+                }).length,
+                todos: user.owngroup.tasks.todos.filter(task => {
+                    for(participant in task.participants) {
+                        if(participant.userId.toString() === decodedToken.id && !participant.done) {
+                            return true;
+                        }
+                    }
+                    return false;
+                }).length,
+                ...(user.owngroup.image && {image: user.owngroup.image})
+            };
+
+            const others = user.groups.map(group => {
+                const dailies = group.tasks.dailies.filter(task => {
+                    for(participant in task.participants) {
+                        if(participant.userId.toString() === decodedToken.id && !participant.done) {
+                            return true;
+                        }
+                    }
+                    return false;
+                }).length;
+
+                const todos = group.tasks.todos.filter(task => {
+                    for(participant in task.participants) {
+                        if(participant.userId.toString() === decodedToken.id && !participant.done) {
+                            return true;
+                        }
+                    }
+                    return false;
+                }).length;
+
+                return {
+                    name: group.name,
+                    dailies,
+                    todos,
+                    ...(group.image && {image: group.image})
+                }
+            });
+
+            return res.status(200).json({ owned, others });
+        })
+        .catch(err => {
+            console.log(err);
+            
+            return res.status(500).json();
+        })
 }
 
 //POST

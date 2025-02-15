@@ -41,7 +41,7 @@ export default function SideBar() {
                 <div className="flex flex-col items-center">
                     <NavButton to={"/user/dailies"} text="Dailies" picture={dailiesPic} />
                     <NavButton to={"/user/todos"} text="To-Dos" picture={todosPic} />
-                    <NavButton to={"/user/groups"} text="Groups" picture={groupPic} />
+                    <NavButton to={"/group"} text="Groups" picture={groupPic} />
                 </div>
             </div>
             {/* logout button */}

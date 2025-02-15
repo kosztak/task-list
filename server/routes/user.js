@@ -7,6 +7,7 @@ const router = express.Router();
 //GET
 router.get("/dailies", userController.getDailies);
 router.get("/todos", userController.getTodos);
+router.get("/groups", userController.getGroups);
 
 //POST
 router.post("/add-task", userController.postAddTask);

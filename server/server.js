@@ -8,6 +8,7 @@ const dotenv = require('dotenv');
 const authRoutes = require('./routes/auth');
 const userRoutes = require('./routes/user');
 const taskRoutes = require('./routes/task');
+const groupRoutes = require('./routes/group');
 
 const dailiesStateCheck = require('./utils/dailies-state-check');
 
@@ -26,7 +27,8 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use(authRoutes);
 app.use('/user', userRoutes);
-app.use('/task', taskRoutes)
+app.use('/task', taskRoutes);
+app.use('/group', groupRoutes);
 
 mongoose.connect(process.env.MONGODB_URI)
     .then(() => {
