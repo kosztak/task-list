@@ -8,6 +8,7 @@ const router = express.Router();
 router.get("/dailies", userController.getDailies);
 router.get("/todos", userController.getTodos);
 router.get("/groups", userController.getGroups);
+router.get("/has-group", userController.getHasGroup);
 
 //POST
 router.post("/add-task", userController.postAddTask);

@@ -10,7 +10,7 @@ import Main from "../components/authenticated/main/Main";
 import NewTaskPage from "../pages/NewTaskPage";
 import EditUserTaskPage from "../pages/EditUserTaskPage";
 import GroupListPage from "../pages/GroupListPage";
-import GroupCreationPage from "../pages/GroupCreationpage";
+import GroupCreationPage from "../pages/GroupCreationPage";
 import GroupJoinPage from "../pages/GroupJoinPage";
 
 import { loader as mainLoader } from "../components/authenticated/main/Main"
@@ -19,12 +19,13 @@ import { loader as userDailiesLoader } from "../pages/DailiesPage";
 import { loader as userTodosLoader } from "../pages/TodosPage";
 import { loader as editUserTaskLoader } from "../pages/EditUserTaskPage";
 import { loader as groupListLoader } from "../pages/GroupListPage";
+import { loader as groupCreationLoader } from "../pages/GroupCreationPage";
 
 import { action as loginAction } from "../components/unauthenticated/Login";
 import { action as registerAction } from "../components/unauthenticated/Register";
 import { action as newTaskAction } from "../pages/NewTaskPage";
 import { action as editUserTaskAction } from "../pages/EditUserTaskPage";
-import { action as groupCreationAction } from "../pages/GroupCreationpage";
+import { action as groupCreationAction } from "../pages/GroupCreationPage";
 import { action as groupJoinAction } from "../pages/GroupJoinPage";
 
 const router = createBrowserRouter([
@@ -96,7 +97,8 @@ const router = createBrowserRouter([
             {
                 path: 'create',
                 element: <GroupCreationPage />,
-                action: groupCreationAction
+                action: groupCreationAction,
+                loader: groupCreationLoader
             },
             {
                 path: "join",

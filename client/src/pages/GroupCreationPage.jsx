@@ -1,4 +1,4 @@
-import { Form } from "react-router-dom";
+import { Form, redirect } from "react-router-dom";
 import Input from "../components/ui/inputs/Input";
 import Button from "../components/ui/inputs/Button";
 import axiosInstance from "../utils/axiosInstance";
@@ -14,6 +14,18 @@ export default function GroupCreationPage() {
             </Form>
         </div>
     );
+}
+
+export async function loader({ request, params }) {
+    return axiosInstance.get("/user/has-group")
+        .then(() => {
+            return Promise.resolve();
+        })
+        .catch(err => {
+            console.log(err);
+            
+            return redirect("/group");
+        })
 }
 
 export async function action({ request, params }) {

@@ -113,6 +113,23 @@ exports.getGroups = (req, res, next) => {
         })
 }
 
+exports.getHasGroup = (req, res, next) => {
+    const decodedToken = jwt.verify(req.cookies.token, process.env.JWT_KEY);
+
+    User.findById(decodedToken.id)
+        .then(user => {
+            if(!user.owngroup){
+                return res.status(200).json();
+            }
+
+            return res.status(500).json();
+        })
+        .catch(err => {
+            console.log(err);
+            return res.status(500).json();
+        })
+}
+
 //POST
 exports.postAddTask = (req, res, next) => {
     const { name, description, date, period, gap } = req.body;
@@ -178,22 +195,24 @@ exports.postJoinGroup = (req, res, next) => {
             if (!group) {
                 return res.status(500).json({ message: "No group exists with given name!" });
             }
-            bcrypt.compare(password, group.password)
-                .then(doMatch => {
-                    if (!doMatch) {
-                        
-                        return res.status(500).json({ message: "The given password is incorrect!" });
+            return User.findById(decodedToken.id)
+                .then(user => {
+                    if(user.groups.includes(group._id.toString())) {
+                        return res.status(500).json({ message: "You are already a member of this group!" });
                     }
-                })
-                
-            group.members.push({
-                userId: decodedToken.id,
-                point: 0
-            })
-            return group.save()
-                .then(() => {
-                    User.findById(decodedToken.id)
-                        .then(user => {
+                    bcrypt.compare(password, group.password)
+                        .then(doMatch => {
+                            if (!doMatch) {
+                                return res.status(500).json({ message: "The given password is incorrect!" });
+                            }
+                        })
+                        
+                    group.members.push({
+                        userId: decodedToken.id,
+                        point: 0
+                    })
+                    return group.save()
+                        .then(() => {
                             user.groups.push(group._id);
                             return user.save();
                         })

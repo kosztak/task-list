@@ -18,7 +18,7 @@ export default function GroupListPage() {
 
     function getOtherGroups() {
         return otherGroupsList.map(group =>
-            <GroupCard group={group} />
+            <GroupCard key={group.id} group={group} />
         )
     }
 
