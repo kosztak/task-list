@@ -200,21 +200,22 @@ exports.postJoinGroup = (req, res, next) => {
                     if(user.groups.includes(group._id.toString())) {
                         return res.status(500).json({ message: "You are already a member of this group!" });
                     }
-                    bcrypt.compare(password, group.password)
+                    return bcrypt.compare(password, group.password)
                         .then(doMatch => {
                             if (!doMatch) {
                                 return res.status(500).json({ message: "The given password is incorrect!" });
                             }
-                        })
-                        
-                    group.members.push({
-                        userId: decodedToken.id,
-                        point: 0
-                    })
-                    return group.save()
-                        .then(() => {
-                            user.groups.push(group._id);
-                            return user.save();
+
+                            group.members.push({
+                                userId: decodedToken.id,
+                                point: 0
+                            })
+                            
+                            return group.save()
+                                .then(() => {
+                                    user.groups.push(group._id);
+                                    return user.save();
+                                })
                         })
                 })
         })
