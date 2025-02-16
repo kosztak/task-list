@@ -11,6 +11,7 @@ import NewTaskPage from "../pages/NewTaskPage";
 import EditUserTaskPage from "../pages/EditUserTaskPage";
 import GroupListPage from "../pages/GroupListPage";
 import GroupCreationPage from "../pages/GroupCreationpage";
+import GroupJoinPage from "../pages/GroupJoinPage";
 
 import { loader as mainLoader } from "../components/authenticated/main/Main"
 import { loader as authLoader } from "../pages/AuthenticationPage";
@@ -24,6 +25,7 @@ import { action as registerAction } from "../components/unauthenticated/Register
 import { action as newTaskAction } from "../pages/NewTaskPage";
 import { action as editUserTaskAction } from "../pages/EditUserTaskPage";
 import { action as groupCreationAction } from "../pages/GroupCreationpage";
+import { action as groupJoinAction } from "../pages/GroupJoinPage";
 
 const router = createBrowserRouter([
     {
@@ -95,6 +97,11 @@ const router = createBrowserRouter([
                 path: 'create',
                 element: <GroupCreationPage />,
                 action: groupCreationAction
+            },
+            {
+                path: "join",
+                element: <GroupJoinPage />,
+                action: groupJoinAction
             }
         ]
     }
