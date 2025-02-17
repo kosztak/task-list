@@ -17,9 +17,10 @@ export default function GroupCreationPage() {
     }, [alertRef])
 
     return(
-        <div className="bg-white rounded-lg p-4 flex flex-col items-stretch gap-4">
-            <Alert ref={alertRef} />
-            <Form method="POST">
+        <div className="bg-white rounded-lg p-4 flex flex-col items-stretch gap-8">
+            <p className="text-xl font-bold">Create a group</p>
+            <Form method="POST" className="flex flex-col gap-4">
+                <Alert ref={alertRef} />
                 <Input name="name" text="Name" type="text" required />
                 <Input name="password" text="Password" type="password" required />
                 <Input name="password-again" text="Password again" type="password" required />
@@ -51,10 +52,14 @@ export async function action({ request, params }) {
     }
 
     return axiosInstance.post("/group/create", { name: data.get('name'), password: data.get('password') })
-        .then(() => {
-
+        .then(response => {
+            console.log(response);
+            
+            return redirect(`/group/${response.data.groupId}`)
         })
         .catch(err => {
+            console.log(err);
+            
             alert.show(err.response.data.message);
             
             return Promise.resolve();

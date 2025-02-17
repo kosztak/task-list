@@ -218,9 +218,9 @@ exports.postJoinGroup = (req, res, next) => {
                                 })
                         })
                 })
-        })
-        .then(() => {
-            return res.status(200).json();
+                .then(() => {
+                    return res.status(200).json({ groupId: group._id });
+                })
         })
         .catch(err => {
             console.log(err);

@@ -19,7 +19,7 @@ export default function DailiesPage() {
     function generateDailyList() {
         return dailiesList.map(daily => {
             return (
-                <DailyBar key={daily._id} task={daily} />
+                <DailyBar key={daily._id} task={daily} isUser={true} />
             )
         })
     }
@@ -27,12 +27,12 @@ export default function DailiesPage() {
     return(
         <div className="bg-white rounded-lg p-4 flex flex-col items-stretch gap-8">
             <p className="text-center text-3xl font-bold">Dailies</p>
-            {dailiesList? (dailiesList.length === 0 ?
+            <Alert ref={alertRef} />
+            {(!dailiesList || dailiesList.length === 0) ?
                 <p className="text-center text-lg">You have no daily tasks</p> :
                 <div className="flex flex-col gap-4">
                     {generateDailyList()}
-                </div>) :
-                <Alert ref={alertRef} />
+                </div>
             }
         </div>
     )

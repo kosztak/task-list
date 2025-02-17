@@ -12,6 +12,7 @@ import EditUserTaskPage from "../pages/EditUserTaskPage";
 import GroupListPage from "../pages/GroupListPage";
 import GroupCreationPage from "../pages/GroupCreationPage";
 import GroupJoinPage from "../pages/GroupJoinPage";
+import GroupPage from "../pages/GroupPage";
 
 import { loader as mainLoader } from "../components/authenticated/main/Main"
 import { loader as authLoader } from "../pages/AuthenticationPage";
@@ -20,6 +21,7 @@ import { loader as userTodosLoader } from "../pages/TodosPage";
 import { loader as editUserTaskLoader } from "../pages/EditUserTaskPage";
 import { loader as groupListLoader } from "../pages/GroupListPage";
 import { loader as groupCreationLoader } from "../pages/GroupCreationPage";
+import { loader as groupLoader } from "../pages/GroupPage";
 
 import { action as loginAction } from "../components/unauthenticated/Login";
 import { action as registerAction } from "../components/unauthenticated/Register";
@@ -104,6 +106,11 @@ const router = createBrowserRouter([
                 path: "join",
                 element: <GroupJoinPage />,
                 action: groupJoinAction
+            },
+            {
+                path: ':groupId',
+                element: <GroupPage />,
+                loader: groupLoader
             }
         ]
     }

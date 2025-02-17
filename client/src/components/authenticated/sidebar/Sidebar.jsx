@@ -7,7 +7,7 @@ import todosPic from "../../../assets/sidepanel-icons/todo.png";
 import groupPic from "../../../assets/sidepanel-icons/group.png";
 import newTaskPic from "../../../assets/sidepanel-icons/new-task.png";
 import logoutPic from "../../../assets/sidepanel-icons/logout.png";
-import profilePic from "../../../assets/sidepanel-icons/profile.png";
+import profilePic from "../../../assets/misc-icons/profile.png";
 import axiosInstance from "../../../utils/axiosInstance";
 
 export default function SideBar() {

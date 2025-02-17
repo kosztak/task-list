@@ -1,0 +1,39 @@
+import { useEffect, useRef } from "react";
+
+import Alert from "../../../ui/Alert";
+import DailyBar from "../../../ui/task-bars/DailyBar";
+import Button from "../../../ui/inputs/Button";
+
+export default function GroupDailiesPanel({ dailiesList, isLeader }) {
+    const alertRef = useRef();
+
+    useEffect(() => {
+        if(dailiesList === undefined) {
+            alertRef.current.show("Couldn't get dailies!");
+        }
+    }, [dailiesList, alertRef])
+
+    function generateDailyList() {
+        return dailiesList.map(daily => {
+            return (
+                <DailyBar key={daily._id} task={daily} isUser={false} />
+            )
+        })
+    }
+
+    return(
+        <dir className="flex flex-col gap-4 p-0">
+            <div className="flex justify-between">
+                <p className="text-gray-900 text-2xl font-bold">Dailies</p>
+                {isLeader && <Button>Edit dailies</Button>}
+            </div>
+            <Alert ref={alertRef} />
+            {(!dailiesList || dailiesList.length === 0) ?
+                <p className="text-center text-lg">You have no daily tasks</p> :
+                <div className="flex flex-col gap-4">
+                    {generateDailyList()}
+                </div>
+            }
+        </dir>
+    )
+}
