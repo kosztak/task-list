@@ -1,4 +1,16 @@
+import { useEffect, useRef } from "react";
+
+import Alert from "../../../ui/Alert";
+
 export default function GroupRankingPanel({ members }) {
+    const alertRef = useRef();
+
+    useEffect(() => {
+        if(!members) {
+            alertRef.current.show("There's no members to rank!")
+        }
+    }, [alertRef, members]);
+
     function getRankings() {
         members.sort((a, b) => a.point < b.point);
         return members.map((member, index) => 
@@ -13,9 +25,12 @@ export default function GroupRankingPanel({ members }) {
     return(
         <div className="bg-gray-900 p-4 rounded-lg flex flex-col gap-8">
             <p className="text-amber-300 text-2xl font-bold text-center">Rankings</p>
-            <div className="flex flex-col gap-2">
-                {getRankings()}
-            </div>
+            <Alert ref={alertRef} />
+            {members &&
+                <div className="flex flex-col gap-2">
+                    {getRankings()}
+                </div>
+            }
         </div>
     )
 }
