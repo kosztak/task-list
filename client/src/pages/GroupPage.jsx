@@ -8,7 +8,7 @@ import GroupRankingPanel from "../components/authenticated/group/group-panels/Gr
 import GroupTodosPanel from "../components/authenticated/group/group-panels/GroupTodosPanel";
 
 export default function GroupPage() {
-    const { group, isLeader } = useLoaderData()
+    const { group, isLeader } = useLoaderData();    
 
     return(
         <div className="bg-white rounded-lg p-4 flex flex-col gap-16">

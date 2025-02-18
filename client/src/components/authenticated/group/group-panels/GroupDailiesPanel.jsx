@@ -1,11 +1,16 @@
 import { useEffect, useRef } from "react";
+import { useNavigate } from "react-router-dom";
 
 import Alert from "../../../ui/Alert";
 import DailyBar from "../../../ui/task-bars/DailyBar";
 import Button from "../../../ui/inputs/Button";
 
 export default function GroupDailiesPanel({ dailiesList, isLeader }) {
+    const navigate = useNavigate();
     const alertRef = useRef();
+
+    console.log(dailiesList);
+    
 
     useEffect(() => {
         if(dailiesList === undefined) {
@@ -21,11 +26,15 @@ export default function GroupDailiesPanel({ dailiesList, isLeader }) {
         })
     }
 
+    function handleButtonClick() {
+        navigate("new-task");
+    }
+
     return(
         <dir className="flex flex-col gap-4 p-0">
             <div className="flex justify-between">
                 <p className="text-gray-900 text-2xl font-bold">Dailies</p>
-                {isLeader && <Button>Edit dailies</Button>}
+                {isLeader && <Button onClick={handleButtonClick}>Add daily</Button>}
             </div>
             <Alert ref={alertRef} />
             {(!dailiesList || dailiesList.length === 0) ?

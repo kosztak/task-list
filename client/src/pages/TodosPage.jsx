@@ -19,7 +19,7 @@ export default function TodosPage() {
     function generateTodoList() {
         return todosList.map(todo => {
             return (
-                <TodoBar key={todo._id} task={todo} />
+                <TodoBar key={todo._id} task={todo} isUser={true} />
             )
         })
     }

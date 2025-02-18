@@ -3,8 +3,6 @@ import profilePic from "../../../../assets/misc-icons/profile.png";
 import Button from "../../../ui/inputs/Button";
 
 export default function GroupInfoPanel({ name, image, leader, isLeader }) {
-    console.log(leader);
-    
     return(
         <div className="p-4 flex justify-between">
             <div className="flex items-center gap-4">

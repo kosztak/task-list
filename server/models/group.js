@@ -39,7 +39,7 @@ const groupSchema = new Schema({
                 required: true
             },
             difficulty: {
-                type: Number,
+                type: String, //trivial: 1, easy: 2, medium: 3, hard: 4
                 required: true
             },
             participants: [{
@@ -61,7 +61,7 @@ const groupSchema = new Schema({
                 required: true
             },
             difficulty: {
-                type: Number,
+                type: String, //trivial: 1, easy: 2, medium: 3, hard: 4
                 required: true
             },
             participants: [{

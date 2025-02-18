@@ -58,41 +58,21 @@ exports.getGroups = (req, res, next) => {
                 id: user.owngroup._id,
                 name: user.owngroup.name,
                 dailies: user.owngroup.tasks.dailies.filter(task => {
-                    for (participant in task.participants) {
-                        if (participant.userId.toString() === decodedToken.id && !participant.done) {
-                            return true;
-                        }
-                    }
-                    return false;
+                    return task.participants.some((participant) => participant.userId.toString() === decodedToken.id && !participant.done)
                 }).length,
                 todos: user.owngroup.tasks.todos.filter(task => {
-                    for (participant in task.participants) {
-                        if (participant.userId.toString() === decodedToken.id && !participant.done) {
-                            return true;
-                        }
-                    }
-                    return false;
+                    return task.participants.some((participant) => participant.userId.toString() === decodedToken.id && !participant.done)
                 }).length,
                 ...(user.owngroup.image && { image: user.owngroup.image })
             } : null;
 
             const others = user.groups.map(group => {
                 const dailies = group.tasks.dailies.filter(task => {
-                    for (participant in task.participants) {
-                        if (participant.userId.toString() === decodedToken.id && !participant.done) {
-                            return true;
-                        }
-                    }
-                    return false;
+                    return task.participants.some((participant) => participant.userId.toString() === decodedToken.id && !participant.done)
                 }).length;
 
                 const todos = group.tasks.todos.filter(task => {
-                    for (participant in task.participants) {
-                        if (participant.userId.toString() === decodedToken.id && !participant.done) {
-                            return true;
-                        }
-                    }
-                    return false;
+                    return task.participants.some((participant) => participant.userId.toString() === decodedToken.id && !participant.done)
                 }).length;
 
                 return {

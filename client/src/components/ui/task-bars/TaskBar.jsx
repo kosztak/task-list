@@ -46,7 +46,7 @@ export default function TaskBar({ id, name, description, date, color, onCheck, c
             <Link to={id} className={`${link} p-4 rounded-r-lg flex flex-col gap-2 grow`}>
                 <p className="text-2xl font-semibold text-gray-900">{name}</p>
                 <p className="text-gray-700">{description}</p>
-                <p className="text-right text-gray-500">{date}</p>
+                <p className="text-right text-gray-500">Due: {date}</p>
             </Link>
         </div>
     )

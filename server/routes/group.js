@@ -6,8 +6,10 @@ const router = express.Router();
 
 //GET
 router.get("/group-data", groupController.getGroupData);
+router.get("/members", groupController.getMembers);
 
 //POST
 router.post("/create", groupController.postCreate);
+router.post("/add-task", groupController.postAddTask);
 
 module.exports = router;

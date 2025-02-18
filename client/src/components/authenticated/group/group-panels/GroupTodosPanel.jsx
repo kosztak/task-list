@@ -16,16 +16,20 @@ export default function GroupTodosPanel({ todosList, isLeader }) {
     function generateTodoList() {
         return todosList.map(todo => {
             return (
-                <TodoBar key={todo._id} task={todo} />
+                <TodoBar key={todo._id} task={todo.taskId} isUser={false} />
             )
         })
+    }
+
+    function handleButtonClick() {
+        navigate("new-task");
     }
 
     return(
         <dir className="flex flex-col gap-4 p-0">
             <div className="flex justify-between">
                 <p className="text-gray-900 text-2xl font-bold">Todos</p>
-                {isLeader && <Button>Edit todos</Button>}
+                {isLeader && <Button onClick={handleButtonClick}>Add todo</Button>}
             </div>
             <Alert ref={alertRef} />
             {(!todosList || todosList.length === 0) ?

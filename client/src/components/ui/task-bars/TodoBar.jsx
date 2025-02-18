@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom";
 import axiosInstance from "../../../utils/axiosInstance";
 import TaskBar from "./TaskBar";
 
-export default function TodoBar({ task }) {
+export default function TodoBar({ task, isUser }) {
     const navigate = useNavigate();
     const dateDiff = new Date(task.date) - new Date();
     const daysDiff = Math.ceil(dateDiff / (1000 * 60 * 60 * 24));
@@ -18,7 +18,7 @@ export default function TodoBar({ task }) {
     }
 
     function handleCheck() {
-        axiosInstance.delete(`/user/task?taskId=${task._id}`)
+        axiosInstance.post(`/${isUser? 'user' : 'group'}/check-daily`, { taskId: task._id })
             .then(() => {
                 navigate("");
             })

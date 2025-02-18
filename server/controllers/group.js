@@ -24,11 +24,23 @@ exports.getGroupData = (req, res, next) => {
                 id: member.userId._id,
                 username: member.userId.username,
                 point: member.point
+            }));            
+
+            const dailies = group.tasks.dailies.filter(task => task.participants.find(part => part.userId.toString() === decodedToken.id)).map(task => ({
+                difficulty: task.difficulty,
+                participants: task.participants,
+                id: task.taskId._id,
+                name: task.taskId.name,
+                description: task.taskId.description,
+                date: dateFns.subDays(task.taskId.date, 1),
+                renewel: task.taskId.renewel
             }));
+            console.log(dailies);
+            const todos = group.tasks.todos.filter(task => (task.participants.find(part => part.userId.toString() === decodedToken.id && !part.done)));
 
             const filteredTasks = {
-                dailies: group.tasks.dailies.filter(task => task.participants.find(part => part.userId.toString() === decodedToken.id)),
-                todos: group.tasks.todos.filter(task => (task.participants.find(part => part.userId.toString() === decodedToken.id && !part.done)))
+                dailies: dailies,
+                todos: todos
             }
 
             const responseData = {
@@ -47,6 +59,25 @@ exports.getGroupData = (req, res, next) => {
         })
 }
 
+exports.getMembers = (req, res, next) => {
+    const groupId = req.query.groupId;
+
+    Group.findById(groupId)
+        .populate("members.userId", "_id username")
+        .then(group => {
+            const formedMembers = group.members.map(member => ({
+                id: member.userId._id,
+                username: member.userId.username,
+                point: member.point
+            }));
+
+            return res.status(200).json({ members: formedMembers });
+        })
+        .catch(err => {
+            console.log(err)
+            return res.status(500).json();
+        })
+}
 
 //POST
 exports.postCreate = (req, res, next) => {
@@ -89,5 +120,56 @@ exports.postCreate = (req, res, next) => {
         .catch(err => {
             console.log(err)
             return res.status(500).json({ message: "Couldn't create the group!" });
+        })
+}
+
+exports.postAddTask = (req, res, next) => {
+    const { groupId, name, description, date, period, gap, difficulty, participants } = req.body;
+    
+    const task = new Task({
+        ownerId: groupId,
+        ownerType: "Group",
+        name,
+        date,
+        description
+    });
+
+    Group.findById(groupId)
+        .then(group => {
+            const formedParticipants = participants.map(part => ({
+                userId: part,
+                done: false
+            }))
+
+            if (period) {
+                task.renewel = {
+                    period,
+                    gap
+                };
+
+                group.tasks.dailies.push({
+                    taskId: task._id,
+                    difficulty,
+                    participants: formedParticipants
+                });
+            } else {
+                group.tasks.todos.push({
+                    taskId: task._id,
+                    difficulty,
+                    participants: formedParticipants
+                });
+            }
+
+            return group.save();
+        })
+        .then(() => {
+            return task.save();
+        })
+        .then(() => {
+            return res.status(200).json();
+        })
+        .catch(err => {
+            console.log(err)
+            return res.status(500).json();
         })
 }

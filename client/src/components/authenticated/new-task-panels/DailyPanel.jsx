@@ -6,8 +6,8 @@ import DatePicker from "../../ui/inputs/DatePicker";
 
 export default function DailyPanel() {
     return(
-        <div className="grid grid-cols-[1fr_1fr] gap-4" style={{ gridTemplateAreas: `"name description" "period description" "date gap"` }}>
-            <Input type="text" name="name" text="Task Name" style={{ gridArea: "name" }} />
+        <div className="grid gap-4" style={{ gridTemplateAreas: `"name description" "period description" "date gap"` }}>
+            <Input type="text" name="name" text="Task Name" style={{ gridArea: "name" }} required={true} />
             <TextArea text="Task Description" name="description" style={{ gridArea: "description" }} />
             <Select text="Period" name="period" style={{ gridArea: "period" }}>
                 <Option value="day">Day</Option>
