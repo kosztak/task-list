@@ -28,14 +28,13 @@ exports.getGroupData = (req, res, next) => {
 
             const dailies = group.tasks.dailies.filter(task => task.participants.find(part => part.userId.toString() === decodedToken.id)).map(task => ({
                 difficulty: task.difficulty,
-                participants: task.participants,
-                id: task.taskId._id,
+                done: task.participants.find(part => part.userId.toString() === decodedToken.id).done,
+                _id: task.taskId._id,
                 name: task.taskId.name,
                 description: task.taskId.description,
                 date: dateFns.subDays(task.taskId.date, 1),
                 renewel: task.taskId.renewel
             }));
-            console.log(dailies);
             const todos = group.tasks.todos.filter(task => (task.participants.find(part => part.userId.toString() === decodedToken.id && !part.done)));
 
             const filteredTasks = {
@@ -167,6 +166,54 @@ exports.postAddTask = (req, res, next) => {
         })
         .then(() => {
             return res.status(200).json();
+        })
+        .catch(err => {
+            console.log(err)
+            return res.status(500).json();
+        })
+}
+
+exports.postCheckTodo = (req, res, next) => {
+    const { taskId } = req.body;
+    const decodedToken = jwt.verify(req.cookies.token, process.env.JWT_KEY);
+
+    Task.findById(taskId)
+        .then(task => {
+            Group.findById(task.ownerId)
+                .then(group => {
+                    const todoToCheck = group.tasks.todos.find(task => task.taskId.toString() === taskId);
+                    const participantTocheck = todoToCheck.participants.find(part => part.userId.toString() === decodedToken.id);
+                    participantTocheck.done = true;
+
+                    return group.save();
+                })
+                .then(() => {
+                    return res.status(200).json();
+                })
+        })
+        .catch(err => {
+            console.log(err)
+            return res.status(500).json();
+        })
+}
+
+exports.postCheckDaily = (req, res, next) => {
+    const { taskId } = req.body;
+    const decodedToken = jwt.verify(req.cookies.token, process.env.JWT_KEY);
+    
+    Task.findById(taskId)
+        .then(task => {
+            Group.findById(task.ownerId)
+                .then(group => {
+                    const dailyToCheck = group.tasks.dailies.find(task => task.taskId.toString() === taskId);
+                    const participantTocheck = dailyToCheck.participants.find(part => part.userId.toString() === decodedToken.id);
+                    participantTocheck.done = true;
+
+                    return group.save();
+                })
+                .then(() => {
+                    return res.status(200).json();
+                })
         })
         .catch(err => {
             console.log(err)

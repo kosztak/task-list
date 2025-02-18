@@ -7,10 +7,7 @@ import Button from "../../../ui/inputs/Button";
 
 export default function GroupDailiesPanel({ dailiesList, isLeader }) {
     const navigate = useNavigate();
-    const alertRef = useRef();
-
-    console.log(dailiesList);
-    
+    const alertRef = useRef();    
 
     useEffect(() => {
         if(dailiesList === undefined) {

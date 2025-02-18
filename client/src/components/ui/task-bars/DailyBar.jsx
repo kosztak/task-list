@@ -40,6 +40,8 @@ export default function DailyBar({ task, isUser }) {
     }
 
     function handleCheck() {
+        console.log(task);
+        
         axiosInstance.post(`/${isUser? 'user' : 'group'}/check-daily`, { taskId: task._id })
             .then(() => {
                 navigate("");

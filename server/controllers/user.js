@@ -149,6 +149,29 @@ exports.postAddTask = (req, res, next) => {
         });
 }
 
+exports.postCheckTodo = (req, res, next) => {
+    const { taskId } = req.query;
+    const decodedToken = jwt.verify(req.cookies.token, process.env.JWT_KEY);
+
+    User.findById(decodedToken.id)
+        .then(user => {
+            if (!user) {
+                return res.status(500).json();
+            }
+
+            user.tasks.todos = user.tasks.todos.filter(task => task.toString() !== taskId);
+            
+            return user.save();
+        }).then(() => {
+            return Task.findByIdAndDelete(taskId);
+        }).then(() => {
+            return res.status(200).json();
+        }).catch(err => {
+            console.log(err);
+            return res.status(500).json();
+        });
+}
+
 exports.postCheckDaily = (req, res, next) => {
     const { taskId } = req.body;
 
@@ -207,6 +230,7 @@ exports.postJoinGroup = (req, res, next) => {
             return res.status(500).json({ message: "Couldn't join to group!" });
         });
 }
+
 
 //DELETE
 exports.deleteTask = (req, res, next) => {

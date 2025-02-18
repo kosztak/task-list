@@ -18,7 +18,7 @@ export default function TodoBar({ task, isUser }) {
     }
 
     function handleCheck() {
-        axiosInstance.post(`/${isUser? 'user' : 'group'}/check-daily`, { taskId: task._id })
+        axiosInstance.post(`/${isUser? 'user' : 'group'}/check-todo`, { taskId: task._id })
             .then(() => {
                 navigate("");
             })

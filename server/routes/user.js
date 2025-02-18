@@ -1,6 +1,7 @@
 const express = require('express');
 
 const userController = require('../controllers/user');
+const user = require('../models/user');
 
 const router = express.Router();
 
@@ -12,6 +13,7 @@ router.get("/has-group", userController.getHasGroup);
 
 //POST
 router.post("/add-task", userController.postAddTask);
+router.post("/check-todo", userController.postCheckTodo);
 router.post("/check-daily", userController.postCheckDaily);
 router.post("/join-group", userController.postJoinGroup);
 
