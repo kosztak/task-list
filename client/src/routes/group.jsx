@@ -2,8 +2,10 @@ import Main from "../components/authenticated/main/Main";
 import GroupListPage from "../pages/GroupListPage";
 import GroupCreationPage from "../pages/GroupCreationPage";
 import GroupJoinPage from "../pages/GroupJoinPage";
-import GroupPage, { loader } from "../pages/GroupPage";
+import GroupPage from "../pages/GroupPage";
 import NewTaskPage from "../pages/NewTaskPage";
+import GroupTaskViewPage from "../pages/GroupTaskViewPage";
+import EditGroupTaskPage from "../pages/EditGroupTaskPage";
 
 import { loader as mainLoader } from "../components/authenticated/main/Main"
 import { loader as groupListLoader } from "../pages/GroupListPage";
@@ -11,11 +13,11 @@ import { loader as groupCreationLoader } from "../pages/GroupCreationPage";
 import { loader as groupLoader } from "../pages/GroupPage";
 import { loader as newTaskLoader } from "../pages/NewTaskPage";
 import { loader as taskViewPageLoader } from "../pages/GroupTaskViewPage";
+import { loader as taskEditLoader } from "../pages/EditGroupTaskPage";
 
 import { action as groupCreationAction } from "../pages/GroupCreationPage";
 import { action as groupJoinAction } from "../pages/GroupJoinPage";
 import { action as newTaskAction } from "../pages/NewTaskPage";
-import GroupTaskViewPage from "../pages/GroupTaskViewPage";
 
 const groupRoutes = {
     path: '/group',
@@ -54,8 +56,18 @@ const groupRoutes = {
                 },
                 {
                     path: ':type',
-                    element: <GroupTaskViewPage />,
-                    loader: taskViewPageLoader,
+                    children: [
+                        {
+                            index: true,
+                            element: <GroupTaskViewPage />,
+                            loader: taskViewPageLoader,
+                        },
+                        {
+                            path: ':taskId',
+                            element: <EditGroupTaskPage />,
+                            loader: taskEditLoader
+                        }
+                    ]
                 }
             ]
         }

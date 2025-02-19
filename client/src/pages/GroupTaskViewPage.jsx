@@ -1,15 +1,20 @@
-import { useLoaderData, useParams } from "react-router-dom"
+import { useLoaderData, useNavigate, useParams } from "react-router-dom"
 
 import axiosInstance from "../utils/axiosInstance";
 
 import Button from "../components/ui/inputs/Button";
 
 export default function GroupTaskViewPage() {
+    const navigate = useNavigate();
     const isDaily = useParams().type === 'dailies';
     const taskDataList = useLoaderData();
 
+    function handleEditTask(task) {
+        navigate(task.id, { state: { task } });
+    }
+
     function getTaskList() {
-        return taskDataList.map((task, index) => 
+        return taskDataList.map((task) => 
             <div key={task.id} className="flex gap-2 justify-between">
                 <div className="grid gap-2 border-gray-900 border-2 rounded p-2 grow">
                     <p >Name: {task.name}</p>
@@ -24,7 +29,7 @@ export default function GroupTaskViewPage() {
                     <p >Difficulty: {task.difficulty}</p>
                     <p >Participants: {task.participants.join(', ')}</p>
                 </div>
-                <Button>Edit {isDaily? 'daily' : 'to-do'}</Button>
+                <Button onClick={() => handleEditTask(task)}>Edit {isDaily? 'daily' : 'to-do'}</Button>
             </div>
         )
     }
@@ -37,13 +42,9 @@ export default function GroupTaskViewPage() {
     )
 }
 
-export async function loader({ request, params }) {
-    console.log(params);
-    
+export async function loader({ request, params }) {    
     return axiosInstance.get(`/group/${params.type}?groupId=${params.groupId}`)
         .then(response => {
-            console.log(response);
-            
             return response.data.taskDataList;
         })
         .catch(err => {

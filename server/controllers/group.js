@@ -79,7 +79,6 @@ exports.getMembers = (req, res, next) => {
 }
 
 exports.getDailies = (req, res, next) => {
-    console.log('asd');
     const groupId = req.query.groupId;
 
     Group.findById(groupId)
@@ -106,7 +105,6 @@ exports.getDailies = (req, res, next) => {
 }
 
 exports.getTodos = (req, res, next) => {
-    console.log('asd');
     const groupId = req.query.groupId;
 
     Group.findById(groupId)
