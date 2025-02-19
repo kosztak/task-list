@@ -14,7 +14,7 @@ export default function GroupRankingPanel({ members }) {
     function getRankings() {
         members.sort((a, b) => a.point < b.point);
         return members.map((member, index) => 
-            <div className="bg-white p-2 rounded flex justify-between">
+            <div key={index} className="bg-white p-2 rounded flex justify-between">
                 <p className="font-bold text-lg">{index+1}</p>
                 <p className="text-lg">{member.username}</p>
                 <p className="font-bold text-lg">{member.point} pt</p>

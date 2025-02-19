@@ -35,7 +35,7 @@ export default function GroupDailiesPanel({ dailiesList, isLeader }) {
             </div>
             <Alert ref={alertRef} />
             {(!dailiesList || dailiesList.length === 0) ?
-                <p className="text-center text-lg">You have no daily tasks</p> :
+                <p className="text-center text-gray-900 text-lg">You have no daily tasks</p> :
                 <div className="flex flex-col gap-4">
                     {generateDailyList()}
                 </div>

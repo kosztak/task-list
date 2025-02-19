@@ -78,6 +78,58 @@ exports.getMembers = (req, res, next) => {
         })
 }
 
+exports.getDailies = (req, res, next) => {
+    console.log('asd');
+    const groupId = req.query.groupId;
+
+    Group.findById(groupId)
+        .populate("tasks.dailies.taskId", "name description date renewel")
+        .populate("tasks.dailies.participants.userId", "username")
+        .then(group => {
+            const formedDailiesList = group.tasks.dailies.map(task => ({
+                id: task.taskId._id,
+                name: task.taskId.name,
+                description: task.taskId.description,
+                date: task.taskId.date,
+                period: task.taskId.renewel.period,
+                gap: task.taskId.renewel.gap,
+                difficulty: task.difficulty,
+                participants: task.participants.map(part => part.userId.username)
+            }));
+
+            return res.status(200).json({ taskDataList: formedDailiesList });
+        })
+        .catch(err => {
+            console.log(err)
+            return res.status(500).json();
+        })
+}
+
+exports.getTodos = (req, res, next) => {
+    console.log('asd');
+    const groupId = req.query.groupId;
+
+    Group.findById(groupId)
+        .populate("tasks.todos.taskId", "name description date renewel")
+        .populate("tasks.todos.participants.userId", "username")
+        .then(group => {
+            const formedTodosList = group.tasks.todos.map(task => ({
+                id: task.taskId._id,
+                name: task.taskId.name,
+                description: task.taskId.description,
+                date: task.taskId.date,
+                difficulty: task.difficulty,
+                participants: task.participants.map(part => part.userId.username)
+            }));
+
+            return res.status(200).json({ taskDataList: formedTodosList });
+        })
+        .catch(err => {
+            console.log(err)
+            return res.status(500).json();
+        })
+}
+
 //POST
 exports.postCreate = (req, res, next) => {
     const decodedToken = jwt.verify(req.cookies.token, process.env.JWT_KEY);

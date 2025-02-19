@@ -2,7 +2,7 @@ import Main from "../components/authenticated/main/Main";
 import GroupListPage from "../pages/GroupListPage";
 import GroupCreationPage from "../pages/GroupCreationPage";
 import GroupJoinPage from "../pages/GroupJoinPage";
-import GroupPage from "../pages/GroupPage";
+import GroupPage, { loader } from "../pages/GroupPage";
 import NewTaskPage from "../pages/NewTaskPage";
 
 import { loader as mainLoader } from "../components/authenticated/main/Main"
@@ -10,10 +10,12 @@ import { loader as groupListLoader } from "../pages/GroupListPage";
 import { loader as groupCreationLoader } from "../pages/GroupCreationPage";
 import { loader as groupLoader } from "../pages/GroupPage";
 import { loader as newTaskLoader } from "../pages/NewTaskPage";
+import { loader as taskViewPageLoader } from "../pages/GroupTaskViewPage";
 
 import { action as groupCreationAction } from "../pages/GroupCreationPage";
 import { action as groupJoinAction } from "../pages/GroupJoinPage";
 import { action as newTaskAction } from "../pages/NewTaskPage";
+import GroupTaskViewPage from "../pages/GroupTaskViewPage";
 
 const groupRoutes = {
     path: '/group',
@@ -49,6 +51,11 @@ const groupRoutes = {
                     element: <NewTaskPage isGroupTask={true} />,
                     action: newTaskAction,
                     loader: newTaskLoader
+                },
+                {
+                    path: ':type',
+                    element: <GroupTaskViewPage />,
+                    loader: taskViewPageLoader,
                 }
             ]
         }
