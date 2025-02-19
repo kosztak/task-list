@@ -24,14 +24,14 @@ export default function GroupDailiesPanel({ dailiesList, isLeader }) {
     }
 
     function handleButtonClick() {
-        navigate("new-task");
+        navigate("dailies");
     }
 
     return(
         <dir className="flex flex-col gap-4 p-0">
             <div className="flex justify-between">
                 <p className="text-gray-900 text-2xl font-bold">Dailies</p>
-                {isLeader && <Button onClick={handleButtonClick}>Add daily</Button>}
+                {isLeader && <Button onClick={handleButtonClick}>View dailies</Button>}
             </div>
             <Alert ref={alertRef} />
             {(!dailiesList || dailiesList.length === 0) ?

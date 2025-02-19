@@ -1,8 +1,17 @@
-import groupPic from "../../../../assets/misc-icons/default-group.png";
-import profilePic from "../../../../assets/misc-icons/profile.png";
+import { useNavigate } from "react-router-dom";
+
 import Button from "../../../ui/inputs/Button";
 
+import groupPic from "../../../../assets/misc-icons/default-group.png";
+import profilePic from "../../../../assets/misc-icons/profile.png";
+
 export default function GroupInfoPanel({ name, image, leader, isLeader }) {
+    const navigate = useNavigate();
+
+    function handleCreateTaskClick() {
+        navigate("new-task");
+    }
+
     return(
         <div className="p-4 flex justify-between">
             <div className="flex items-center gap-4">
@@ -10,7 +19,8 @@ export default function GroupInfoPanel({ name, image, leader, isLeader }) {
                 <p className="text-gray-900 text-3xl font-bold">{name}</p>
             </div>
             {isLeader? 
-                <div className="flex items-center">
+                <div className="flex items-center gap-4">
+                    <Button onClick={handleCreateTaskClick}>Create task</Button>
                     <Button>Edit info</Button>
                 </div> :
                 <div className="flex flex-col justify-center gap-2">
