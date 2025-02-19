@@ -13,6 +13,7 @@ import { loader as editUserTaskLoader } from "../pages/EditUserTaskPage";
 import { action as newTaskAction } from "../pages/NewTaskPage";
 import { action as editUserTaskAction } from "../pages/EditUserTaskPage";
 
+// contains all user related routes
 const userRoutes = {
     path: '/user',
     element: <Main />,

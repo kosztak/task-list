@@ -8,6 +8,7 @@ const Task = require('../models/task');
 
 
 //POST
+// registers a new user
 exports.postRegister = (req, res, next) => {
     const { username, password } = req.body;
 
@@ -21,7 +22,7 @@ exports.postRegister = (req, res, next) => {
             //save account
             return bcrypt.hash(password, 12)
                 .then(password => {
-                    const user = new User({
+                    const user = new User({ // initialize user data
                         username,
                         password,
                         groups: [],
@@ -41,6 +42,7 @@ exports.postRegister = (req, res, next) => {
         })
 }
 
+// logs in a user
 exports.postLogin = (req, res, next) => {
     const { username, password } = req.body;
 
@@ -69,6 +71,7 @@ exports.postLogin = (req, res, next) => {
         });
 };
 
+// validates if the given token contains a valid user id
 exports.postValidateToken = (req, res, next) => {
     const token = req.cookies.token;
 
@@ -88,6 +91,7 @@ exports.postValidateToken = (req, res, next) => {
 
 }
 
+// logs out user
 exports.postLogout = (req, res, next) => {
-    res.clearCookie("token").json();
+    res.clearCookie("token").json(); // delete token
 }

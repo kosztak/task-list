@@ -6,6 +6,7 @@ import axiosInstance from "../utils/axiosInstance"
 import DailyBar from "../components/ui/task-bars/DailyBar";
 import Alert from "../components/ui/Alert";
 
+// This component shows the user's daily tasks
 export default function DailiesPage() {
     const dailiesList = useLoaderData();
     const alertRef = useRef();
@@ -16,7 +17,7 @@ export default function DailiesPage() {
         }
     }, [dailiesList, alertRef])
 
-    function generateDailyList() {
+    function generateDailyList() { // creates a DailyBar component list to show all user related dailies
         return dailiesList.map(daily => {
             return (
                 <DailyBar key={daily._id} task={daily} isUser={true} />

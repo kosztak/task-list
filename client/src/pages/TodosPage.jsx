@@ -16,7 +16,7 @@ export default function TodosPage() {
             }
         }, [todosList, alertRef])
 
-    function generateTodoList() {
+    function generateTodoList() { // creates a TodoBar component list to show all user related to-dos
         return todosList.map(todo => {
             return (
                 <TodoBar key={todo._id} task={todo} isUser={true} />

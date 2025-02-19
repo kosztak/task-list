@@ -4,6 +4,7 @@ import axiosInstance from "../utils/axiosInstance";
 
 import Button from "../components/ui/inputs/Button";
 
+// On this vomponent the group leader can see a list of all dailies or to-dos.
 export default function GroupTaskViewPage() {
     const navigate = useNavigate();
     const isDaily = useParams().type === 'dailies';
@@ -13,7 +14,7 @@ export default function GroupTaskViewPage() {
         navigate(task.id, { state: { task } });
     }
 
-    function getTaskList() {
+    function getTaskList() { // generates a list for the tasks
         return taskDataList.map((task) => 
             <div key={task.id} className="flex gap-2 justify-between">
                 <div className="grid gap-2 border-gray-900 border-2 rounded p-2 grow">

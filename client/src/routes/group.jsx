@@ -19,6 +19,7 @@ import { action as groupCreationAction } from "../pages/GroupCreationPage";
 import { action as groupJoinAction } from "../pages/GroupJoinPage";
 import { action as newTaskAction } from "../pages/NewTaskPage";
 
+// contains all group related routes
 const groupRoutes = {
     path: '/group',
     element: <Main />,

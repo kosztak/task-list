@@ -2,6 +2,7 @@ import DatePicker from "../../ui/inputs/DatePicker";
 import Input from "../../ui/inputs/Input";
 import TextArea from "../../ui/inputs/TextArea";
 
+// This component shows the to-do related inputs on the new task pages.
 export default function TodoPanel() {
     return(
         <div className="grid gap-4" style={{ gridTemplateAreas: `"name description" "date description"` }}>

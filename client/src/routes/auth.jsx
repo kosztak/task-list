@@ -7,6 +7,7 @@ import { loader as authLoader } from "../pages/AuthenticationPage";
 import { action as loginAction } from "../components/unauthenticated/Login";
 import { action as registerAction } from "../components/unauthenticated/Register";
 
+// contains all authentication routes
 const authRoutes = {
     path: '/',
     element: <AuthenticationPage />,

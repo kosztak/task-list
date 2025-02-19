@@ -6,6 +6,7 @@ import GroupCard from "../components/authenticated/group/GroupCard";
 import Button from "../components/ui/inputs/Button";
 import PageLink from "../components/ui/PageLink";
 
+// This component lists all groups where ths user is a member or the leader. 
 export default function GroupListPage() {
     const navigate = useNavigate();
     const groups = useLoaderData();

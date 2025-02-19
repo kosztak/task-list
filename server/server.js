@@ -10,7 +10,7 @@ const userRoutes = require('./routes/user');
 const taskRoutes = require('./routes/task');
 const groupRoutes = require('./routes/group');
 
-const dailiesStateCheck = require('./utils/dailies-state-check');
+const taskStateCheck = require('./utils/task-state-check');
 
 dotenv.config();
 
@@ -32,7 +32,7 @@ app.use('/group', groupRoutes);
 
 mongoose.connect(process.env.MONGODB_URI)
     .then(() => {
-        app.listen(3000, dailiesStateCheck);
+        app.listen(3000, taskStateCheck);
     }).catch(err => {
         console.log(err);
     });

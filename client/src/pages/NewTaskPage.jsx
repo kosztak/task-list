@@ -11,6 +11,7 @@ import Checkbox from "../components/ui/inputs/Checkbox";
 let globalIsDaily;
 let globalIsGroupTask;
 
+// With this component users can create own tasks or group tasks, depends on which route the component is shown on.
 export default function NewTaskPage({ isGroupTask }) {
     const members = useLoaderData()
     const [isDaily, setIsDaily] = useState(true);
@@ -23,7 +24,7 @@ export default function NewTaskPage({ isGroupTask }) {
         globalIsGroupTask = isGroupTask;
     }, [isGroupTask])
 
-    function handleTypeChange(event) {
+    function handleTypeChange(event) { // changes between daily and to-do related input panels
         setIsDaily(event.target.value === "daily");
     }
 
@@ -77,7 +78,7 @@ export async function loader({ request, params }) {
         })
 }
 
-export async function action({ request, params }) {
+export async function action({ request, params }) { // creates new task
     const data = await request.formData();
     const date = new Date(data.get('date')).toISOString().split('T')[0];    
 

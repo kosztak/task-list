@@ -1,6 +1,7 @@
 const Task = require('../models/task');
 
 //GET
+// gives back all data of the task
 exports.getTaskData = (req, res, next) => {
     const taskId = req.query.taskId;
 
@@ -19,6 +20,7 @@ exports.getTaskData = (req, res, next) => {
 //POST
 
 //PATCH
+// updates data of the task
 exports.patchTask = (req, res, next) => {
     const { _id, ...task } = req.body;
 

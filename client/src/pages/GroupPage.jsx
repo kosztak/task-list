@@ -7,6 +7,7 @@ import GroupInfoPanel from "../components/authenticated/group/group-panels/group
 import GroupRankingPanel from "../components/authenticated/group/group-panels/GroupRankingPanel";
 import GroupTodosPanel from "../components/authenticated/group/group-panels/GroupTodosPanel";
 
+// This component all generic group information to users.
 export default function GroupPage() {
     const { group, isLeader } = useLoaderData();    
 

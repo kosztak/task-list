@@ -1,3 +1,4 @@
+// this component shows all user related information 
 export default function UserInfoPage() {
     return(
         <div>

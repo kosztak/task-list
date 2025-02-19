@@ -14,10 +14,10 @@ import RadioButton from "../components/ui/inputs/RadioButton";
 import Checkbox from "../components/ui/inputs/Checkbox";
 
 let alert;
-
 let globalTask;
 
-export default function EditTaskPage() {
+// Through this component the leader of the group can edit all tasks.
+export default function EditGroupTaskPage() {
     const navigate = useNavigate();
     const alertRef = useRef();
     const params = useParams();
@@ -99,7 +99,7 @@ export default function EditTaskPage() {
     )
 }
 
-export async function loader({ request, params }) {
+export async function loader({ request, params }) { // loads the members of group from back-end
     return axiosInstance.get(`/group/members?groupId=${params.groupId}`)
         .then(response => {
             return response.data.members;
@@ -111,7 +111,7 @@ export async function loader({ request, params }) {
         })
 }
 
-export async function action({ request, params }) {
+export async function action({ request, params }) { // updates the current task on the back-end
     const data = await request.formData();
 
     let responseData = {
@@ -121,7 +121,7 @@ export async function action({ request, params }) {
         ...(globalTask.date.split('T')[0] !== data.get('date') && {date: data.get('date')})
     }
 
-    if(globalTask.renewel) {
+    if(globalTask.renewel) { // overrides the renewel property of task, if it is a daily
         responseData = {
             ...responseData,
             ...((globalTask.renewel.period !== data.get('period')) && {"renewel.period": data.get('period')}),
@@ -131,7 +131,7 @@ export async function action({ request, params }) {
         
     return axiosInstance.patch('/task', responseData)
         .then(() => {
-            return redirect('');
+            return redirect(''); // refreshes current page
         })
         .catch(err => {
             alert.show(err.response.data.message);

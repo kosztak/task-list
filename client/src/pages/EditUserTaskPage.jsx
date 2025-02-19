@@ -12,9 +12,9 @@ import Alert from "../components/ui/Alert";
 import axiosInstance from "../utils/axiosInstance";
 
 let alert;
-
 let globalTask;
 
+// With this component the user can edit or delete their components.
 export default function EditTaskPage() {
     const navigate = useNavigate();
     const alertRef = useRef();
@@ -35,7 +35,7 @@ export default function EditTaskPage() {
         }
     }, [task, alertRef])
 
-    function handleTaskDelete() {
+    function handleTaskDelete() { // deletes task on back-end
         axiosInstance.delete(`/user/task?taskId=${task._id}&isDaily=${isDaily}`)
             .then(() => {
                 navigate(`/user/${isDaily? "dailies" : "todos"}`);
@@ -76,7 +76,7 @@ export default function EditTaskPage() {
     )
 }
 
-export async function loader({ request, params }) {
+export async function loader({ request, params }) { // loads all task data
     return axiosInstance.get(`/task/user-data?taskId=${params.taskId}`)
         .then(task => {
             return task.data;
@@ -98,7 +98,7 @@ export async function action({ request, params }) {
         ...(globalTask.date.split('T')[0] !== data.get('date') && {date: data.get('date')})
     }
 
-    if(globalTask.renewel) {
+    if(globalTask.renewel) { // overrides the renewel property of task, if it is a daily
         responseData = {
             ...responseData,
             ...((globalTask.renewel.period !== data.get('period')) && {"renewel.period": data.get('period')}),
@@ -107,8 +107,8 @@ export async function action({ request, params }) {
     }
         
     return axiosInstance.patch('/task', responseData)
-        .then(() => {
-            return redirect('');
+        .then(() => { 
+            return redirect(''); // refreshes current page
         })
         .catch(err => {
             alert.show(err.response.data.message);

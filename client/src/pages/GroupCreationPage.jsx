@@ -9,6 +9,7 @@ import Alert from "../components/ui/Alert";
 
 let alert;
 
+// With this component all user can create a group, if they don't have any yet.
 export default function GroupCreationPage() {
     const alertRef = useRef();
 
@@ -30,7 +31,7 @@ export default function GroupCreationPage() {
     );
 }
 
-export async function loader({ request, params }) {
+export async function loader({ request, params }) { // checks, if the user already has a group
     return axiosInstance.get("/user/has-group")
         .then(() => {
             return Promise.resolve();

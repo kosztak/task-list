@@ -10,11 +10,12 @@ import logoutPic from "../../../assets/sidepanel-icons/logout.png";
 import profilePic from "../../../assets/misc-icons/profile.png";
 import axiosInstance from "../../../utils/axiosInstance";
 
+// THis component is shown on all authenticated pages. Users can navigate between pages through this component.
 export default function SideBar() {
     const navigate = useNavigate();
     const defaultNewTaskCSS = "relative left-16";
 
-    function handleLogout() {
+    function handleLogout() { // logs out the user
         axiosInstance.post("/logout")
         .then(response => {
             navigate("/");

@@ -4,6 +4,7 @@ import Select from "../../ui/inputs/select/Select";
 import TextArea from "../../ui/inputs/TextArea";
 import DatePicker from "../../ui/inputs/DatePicker";
 
+// This component shows the daily related inputs on the new task pages.
 export default function DailyPanel() {
     return(
         <div className="grid gap-4" style={{ gridTemplateAreas: `"name description" "period description" "date gap"` }}>

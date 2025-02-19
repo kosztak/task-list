@@ -9,6 +9,7 @@ import Alert from "../components/ui/Alert";
 
 let alert;
 
+// With this component the users can join any group (except theirs) with correct name and password pair.
 export default function GroupJoinPage() {
     const alertRef = useRef();
     

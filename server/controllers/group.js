@@ -7,25 +7,29 @@ const Task = require('../models/task');
 const Group = require('../models/group');
 
 //GET
+// gives back all data, that is shown on the group page on front-end
 exports.getGroupData = (req, res, next) => {
     const decodedToken = jwt.verify(req.cookies.token, process.env.JWT_KEY);
     const groupId = req.query.groupId;
 
-    Group.findById(groupId)
+    Group.findById(groupId) // find group and populate it with necessary data
         .populate("members.userId", "username _id")
         .populate("tasks.dailies.taskId", "name description date renewel")
         .populate("tasks.todos.taskId", "name description date")
         .then(group => {
+            // checks if the user is anot a member of the group
             if(group.members.filter(member => member.userId._id.toString() === decodedToken.id).length === 0) {
                 return res.status(500).json();
             }
             
+            // gets only the necessary data from the group members
             const formedMembers = group.members.map(member => ({
                 id: member.userId._id,
                 username: member.userId.username,
                 point: member.point
             }));            
 
+            // gets only dailies where the user is a participant
             const dailies = group.tasks.dailies.filter(task => task.participants.find(part => part.userId.toString() === decodedToken.id)).map(task => ({
                 difficulty: task.difficulty,
                 done: task.participants.find(part => part.userId.toString() === decodedToken.id).done,
@@ -35,6 +39,8 @@ exports.getGroupData = (req, res, next) => {
                 date: dateFns.subDays(task.taskId.date, 1),
                 renewel: task.taskId.renewel
             }));
+
+            // gets only to-dos where the user is a participant
             const todos = group.tasks.todos.filter(task => (task.participants.find(part => part.userId.toString() === decodedToken.id && !part.done)));
 
             const filteredTasks = {
@@ -58,6 +64,7 @@ exports.getGroupData = (req, res, next) => {
         })
 }
 
+// gives back data from all group members
 exports.getMembers = (req, res, next) => {
     const groupId = req.query.groupId;
 
@@ -78,6 +85,7 @@ exports.getMembers = (req, res, next) => {
         })
 }
 
+//gives back data of all dailies of the group to the group leader
 exports.getDailies = (req, res, next) => {
     const groupId = req.query.groupId;
 
@@ -104,6 +112,7 @@ exports.getDailies = (req, res, next) => {
         })
 }
 
+//gives back data of all to-dos of the group to the group leader
 exports.getTodos = (req, res, next) => {
     const groupId = req.query.groupId;
 
@@ -129,13 +138,14 @@ exports.getTodos = (req, res, next) => {
 }
 
 //POST
+// cerates a new group
 exports.postCreate = (req, res, next) => {
     const decodedToken = jwt.verify(req.cookies.token, process.env.JWT_KEY);
     const {name, password} = req.body;
     
     Group.findOne({ name })
         .then(groupDoc => {
-            if(groupDoc) {
+            if(groupDoc) { // checks if the user already has an own group
                 return res.status(500).json({ message: "Group already exists with given name!" });
             }
 
@@ -172,10 +182,11 @@ exports.postCreate = (req, res, next) => {
         })
 }
 
+// adds a task to the group
 exports.postAddTask = (req, res, next) => {
     const { groupId, name, description, date, period, gap, difficulty, participants } = req.body;
     
-    const task = new Task({
+    const task = new Task({ // create new task and fill it up with data 
         ownerId: groupId,
         ownerType: "Group",
         name,
@@ -223,6 +234,7 @@ exports.postAddTask = (req, res, next) => {
         })
 }
 
+// checks a todo for a user
 exports.postCheckTodo = (req, res, next) => {
     const { taskId } = req.body;
     const decodedToken = jwt.verify(req.cookies.token, process.env.JWT_KEY);
@@ -247,6 +259,7 @@ exports.postCheckTodo = (req, res, next) => {
         })
 }
 
+// checks a daily for a user
 exports.postCheckDaily = (req, res, next) => {
     const { taskId } = req.body;
     const decodedToken = jwt.verify(req.cookies.token, process.env.JWT_KEY);

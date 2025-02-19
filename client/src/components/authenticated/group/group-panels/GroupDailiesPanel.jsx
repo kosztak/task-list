@@ -5,17 +5,18 @@ import Alert from "../../../ui/Alert";
 import DailyBar from "../../../ui/task-bars/DailyBar";
 import Button from "../../../ui/inputs/Button";
 
+// This component shows the daily tasks of a group for every user. Only the participated tasks will appear.
 export default function GroupDailiesPanel({ dailiesList, isLeader }) {
     const navigate = useNavigate();
     const alertRef = useRef();    
 
-    useEffect(() => {
+    useEffect(() => { // show alert component, if no daliy is available
         if(dailiesList === undefined) {
             alertRef.current.show("Couldn't get dailies!");
         }
     }, [dailiesList, alertRef])
 
-    function generateDailyList() {
+    function generateDailyList() { // creates a DailyBar component list to show all user related dailies
         return dailiesList.map(daily => {
             return (
                 <DailyBar key={daily._id} task={daily} isUser={false} />
@@ -23,7 +24,7 @@ export default function GroupDailiesPanel({ dailiesList, isLeader }) {
         })
     }
 
-    function handleButtonClick() {
+    function handleButtonClick() { // navigates only the leader of the group to a page, where they can see all dailies of the group
         navigate("dailies");
     }
 
