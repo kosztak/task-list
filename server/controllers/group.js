@@ -283,3 +283,43 @@ exports.postCheckDaily = (req, res, next) => {
             return res.status(500).json();
         })
 }
+
+//DELETE
+// deletes given task from group
+exports.deleteTask = (req, res, next) => {
+    const { taskId, isDaily } = req.query;
+
+    Task.findById(taskId)
+        .then(task => {
+            if(!task) {
+                return res.status(500).json();
+            }
+
+            return Group.findById(task.ownerId)
+                .then(group => {
+                    if(!group) {
+                        return res.status(500).json();
+                    }
+
+                    if (isDaily) {
+                        group.tasks.dailies = group.tasks.dailies.filter(task => task.taskId.toString() !== taskId);
+                    } else {
+                        console.log(group.tasks.todos);
+                        group.tasks.todos = group.tasks.todos.filter(task => task.taskId.toString() !== taskId);
+                        console.log(group.tasks.todos);
+                    }
+
+                    return group.save();
+                })
+                .then(() => {
+                    return task.deleteOne();
+                })
+        })
+        .then(() => {
+            return res.status(200).json();
+        })
+        .catch(err => {
+            console.log(err);
+            return res.status(500).json();
+        });
+}

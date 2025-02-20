@@ -43,9 +43,11 @@ export default function GroupTaskViewPage() {
     )
 }
 
-export async function loader({ request, params }) {    
+export async function loader({ request, params }) {
     return axiosInstance.get(`/group/${params.type}?groupId=${params.groupId}`)
         .then(response => {
+            console.log(response.data);
+            
             return response.data.taskDataList;
         })
         .catch(err => {

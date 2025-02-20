@@ -247,7 +247,6 @@ exports.deleteTask = (req, res, next) => {
                 user.tasks.dailies = user.tasks.dailies.filter(task => task.taskId.toString() !== taskId);
             } else {
                 user.tasks.todos = user.tasks.todos.filter(task => task.toString() !== taskId);
-                console.log(user.tasks.todos, taskId);
             }
             return user.save();
         }).then(() => {

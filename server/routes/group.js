@@ -16,4 +16,7 @@ router.post("/add-task", groupController.postAddTask);
 router.post("/check-todo", groupController.postCheckTodo);
 router.post("/check-daily", groupController.postCheckDaily);
 
+//DELETE
+router.delete("/task", groupController.deleteTask);
+
 module.exports = router;

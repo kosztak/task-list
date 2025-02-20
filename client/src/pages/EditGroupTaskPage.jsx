@@ -39,14 +39,14 @@ export default function EditGroupTaskPage() {
         }
     }, [task, alertRef])
 
-    function handleTaskDelete() {
-        axiosInstance.delete(`/group/task?taskId=${task._id}&isDaily=${isDaily}`)
+    function handleTaskDelete() {        
+        axiosInstance.delete(`/group/task?taskId=${task.id}&isDaily=${isDaily}`)
             .then(() => {
                 navigate(`/group/${params.groupId}/${params.type}`);
             })
             .catch(err=> {
                 console.log(err);
-                
+
                 return Promise.resolve();
             })
     }
@@ -82,7 +82,7 @@ export default function EditGroupTaskPage() {
                                 <div>
                                     {
                                         members.map((member, index) => 
-                                            <Checkbox key={index} text={member.username} name={"participant"} value={member.id} checked={task.participants.some(part => part === member.username)} />
+                                            <Checkbox key={index} text={member.username} name={"participant"} value={member.id} defaultChecked={task.participants.some(part => part === member.username)} />
                                         )
                                     }
                                 </div>
