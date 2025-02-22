@@ -9,6 +9,7 @@ router.get("/group-data", groupController.getGroupData);
 router.get("/members", groupController.getMembers);
 router.get("/dailies", groupController.getDailies);
 router.get("/todos", groupController.getTodos);
+router.get("/task-data", groupController.getTaskData);
 
 //POST
 router.post("/create", groupController.postCreate);

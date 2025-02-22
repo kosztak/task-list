@@ -18,6 +18,7 @@ import { loader as taskEditLoader } from "../pages/EditGroupTaskPage";
 import { action as groupCreationAction } from "../pages/GroupCreationPage";
 import { action as groupJoinAction } from "../pages/GroupJoinPage";
 import { action as newTaskAction } from "../pages/NewTaskPage";
+import { action as editTaskAction } from "../pages/EditGroupTaskPage";
 
 // contains all group related routes
 const groupRoutes = {
@@ -66,7 +67,8 @@ const groupRoutes = {
                         {
                             path: ':taskId',
                             element: <EditGroupTaskPage />,
-                            loader: taskEditLoader
+                            loader: taskEditLoader,
+                            action: editTaskAction
                         }
                     ]
                 }

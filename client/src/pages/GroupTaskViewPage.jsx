@@ -11,7 +11,7 @@ export default function GroupTaskViewPage() {
     const taskDataList = useLoaderData();
 
     function handleEditTask(task) {
-        navigate(task.id, { state: { task } });
+        navigate(task.id);
     }
 
     function getTaskList() { // generates a list for the tasks
@@ -46,8 +46,6 @@ export default function GroupTaskViewPage() {
 export async function loader({ request, params }) {
     return axiosInstance.get(`/group/${params.type}?groupId=${params.groupId}`)
         .then(response => {
-            console.log(response.data);
-            
             return response.data.taskDataList;
         })
         .catch(err => {

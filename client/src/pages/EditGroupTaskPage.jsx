@@ -21,8 +21,7 @@ export default function EditGroupTaskPage() {
     const navigate = useNavigate();
     const alertRef = useRef();
     const params = useParams();
-    const task = useLocation().state.task;
-    const members = useLoaderData();
+    const { members, task } = useLoaderData();
     const isDaily = params.type === 'dailies';
 
     useEffect(() => {
@@ -58,7 +57,7 @@ export default function EditGroupTaskPage() {
                 <>
                     <p className="text-gray-900 text-2xl font-bold">Editing: {task.name}</p>
                     <Form method="POST"  className="flex flex-col items-stretch gap-16" >
-                        <div className="grid grid-cols-[1fr_1fr] gap-4" style={{ gridTemplateAreas: `"name description" "period description" "date gap" "difficulty difficulty" "participants participants"` }}>
+                        <div className="grid grid-cols-[1fr_1fr] gap-4" style={{ gridTemplateAreas: '"name description" "period description" "date gap" "difficulty difficulty" "participants participants"' }}>
                             <Input type="text" name="name" text="Task Name" style={{ gridArea: "name" }} defaultValue={task.name} />
                             <TextArea text="Task Description" name="description" style={{ gridArea: "description" }} defaultValue={task.description} />
                             {isDaily && <Select text="Period" name="period" style={{ gridArea: "period" }} defaultValue={task.period}>
@@ -100,7 +99,7 @@ export default function EditGroupTaskPage() {
 }
 
 export async function loader({ request, params }) { // loads the members of group from back-end
-    return axiosInstance.get(`/group/members?groupId=${params.groupId}`)
+    const members = await axiosInstance.get(`/group/members?groupId=${params.groupId}`)
         .then(response => {
             return response.data.members;
         })
@@ -109,27 +108,44 @@ export async function loader({ request, params }) { // loads the members of grou
             
             return Promise.resolve();
         })
+    
+    const task = await axiosInstance.get(`/group/task-data?groupId=${params.groupId}&type=${params.type}&taskId=${params.taskId}`)
+    .then(response => {
+        return response.data.task;
+    })
+    .catch(err => {
+        console.log(err);
+        
+        return Promise.resolve();
+    })
+
+    return { members, task };
 }
 
 export async function action({ request, params }) { // updates the current task on the back-end
     const data = await request.formData();
 
-    let responseData = {
-        _id: globalTask._id,
+    let taskData = {
+        id: globalTask.id,
         ...(globalTask.name !== data.get('name') && {name: data.get('name')}),
         ...(globalTask.description !== data.get('description') && {description: data.get('description')}),
-        ...(globalTask.date.split('T')[0] !== data.get('date') && {date: data.get('date')})
-    }
+        ...(globalTask.date.split('T')[0] !== data.get('date') && {date: data.get('date')})        
+    }    
 
-    if(globalTask.renewel) { // overrides the renewel property of task, if it is a daily
-        responseData = {
-            ...responseData,
-            ...((globalTask.renewel.period !== data.get('period')) && {"renewel.period": data.get('period')}),
-            ...((globalTask.renewel.gap !== parseInt(data.get('gap'))) && {"renewel.gap": data.get('gap')})
+    if(globalTask.period) { // overrides the renewel property of task, if it is a daily
+        taskData = {
+            ...taskData,
+            ...((globalTask.period !== data.get('period')) && {"renewel.period": data.get('period')}),
+            ...((globalTask.gap !== parseInt(data.get('gap'))) && {"renewel.gap": data.get('gap')})
         }
     }
+
+    const groupData = {
+        ...(globalTask.difficulty !== data.get('difficulty') && { difficulty: data.get('difficulty') }),
+        participants: data.getAll('participant')
+    }
         
-    return axiosInstance.patch('/task', responseData)
+    return axiosInstance.patch('/task/group-task', { taskData, groupData, isDaily: (data.get('period') !== undefined) })
         .then(() => {
             return redirect(''); // refreshes current page
         })

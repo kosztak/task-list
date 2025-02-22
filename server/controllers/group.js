@@ -137,6 +137,33 @@ exports.getTodos = (req, res, next) => {
         })
 }
 
+exports.getTaskData = (req, res, next) => {
+    const { groupId, type, taskId } = req.query;
+
+    Group.findById(groupId, `tasks.${type}`)
+        .populate(`tasks.${type}.taskId`)
+        .then(({ tasks }) => {
+            const task = tasks[type][0];
+            
+            const formedTask = {
+                id: task.taskId._id,
+                name: task.taskId.name,
+                description: task.taskId.description,
+                date: task.taskId.date,
+                period: task.taskId.renewel.period,
+                gap: task.taskId.renewel.gap,
+                difficulty: task.difficulty,
+                participants: task.participants.map(part => part.userId.username)
+            };
+            
+            return res.status(200).json({ task: formedTask });
+        })
+        .catch(err => {
+            console.log(err)
+            return res.status(500).json();
+        })
+}
+
 //POST
 // cerates a new group
 exports.postCreate = (req, res, next) => {

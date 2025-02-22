@@ -10,6 +10,7 @@ router.get("/user-data", taskController.getTaskData);
 //POST
 
 //PATCH
-router.patch('/', taskController.patchTask);
+router.patch('/user-task', taskController.patchUserTask);
+router.patch('/group-task', taskController.patchGroupTask);
 
 module.exports = router;

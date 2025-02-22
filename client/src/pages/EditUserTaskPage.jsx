@@ -106,7 +106,7 @@ export async function action({ request, params }) {
         }
     }
         
-    return axiosInstance.patch('/task', responseData)
+    return axiosInstance.patch('/user-task', responseData)
         .then(() => { 
             return redirect(''); // refreshes current page
         })
