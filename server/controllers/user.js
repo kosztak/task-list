@@ -150,7 +150,7 @@ exports.postAddTask = (req, res, next) => {
 }
 
 exports.postCheckTodo = (req, res, next) => {
-    const { taskId } = req.query;
+    const { taskId } = req.body;
     const decodedToken = jwt.verify(req.cookies.token, process.env.JWT_KEY);
 
     User.findById(decodedToken.id)
@@ -158,7 +158,7 @@ exports.postCheckTodo = (req, res, next) => {
             if (!user) {
                 return res.status(500).json();
             }
-
+            
             user.tasks.todos = user.tasks.todos.filter(task => task.toString() !== taskId);
             
             return user.save();
