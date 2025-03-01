@@ -13,6 +13,10 @@ export default function GroupInfoPanel({ name, image, leader, isLeader }) {
         navigate("new-task");
     }
 
+    function handleEditInfoClick() {
+        navigate("edit");
+    }
+
     return(
         <div className="p-4 flex justify-between">
             <div className="flex items-center gap-4">
@@ -22,7 +26,7 @@ export default function GroupInfoPanel({ name, image, leader, isLeader }) {
             {isLeader? 
                 <div className="flex items-center gap-4">
                     <Button onClick={handleCreateTaskClick}>Create task</Button>
-                    <Button>Edit info</Button>
+                    <Button onClick={handleEditInfoClick}>Edit info</Button>
                 </div> :
                 <div className="flex flex-col justify-center gap-2">
                     <p className="font-semibold text-xl text-gray-900 text-center">Leader</p>

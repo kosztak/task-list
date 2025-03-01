@@ -1,4 +1,5 @@
 const express = require('express');
+const multer = require('multer');
 
 const groupController = require('../controllers/group');
 
@@ -19,5 +20,8 @@ router.post("/check-daily", groupController.postCheckDaily);
 
 //DELETE
 router.delete("/task", groupController.deleteTask);
+
+//PATCH
+router.patch("/info", multer(multer.memoryStorage()).single("image"), groupController.patchInfo);
 
 module.exports = router;

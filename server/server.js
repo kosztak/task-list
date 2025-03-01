@@ -4,6 +4,7 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
 const dotenv = require('dotenv');
+const multer = require('multer');
 
 const authRoutes = require('./routes/auth');
 const userRoutes = require('./routes/user');

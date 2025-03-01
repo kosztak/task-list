@@ -6,6 +6,7 @@ import GroupPage from "../pages/GroupPage";
 import NewTaskPage from "../pages/NewTaskPage";
 import GroupTaskViewPage from "../pages/GroupTaskViewPage";
 import EditGroupTaskPage from "../pages/EditGroupTaskPage";
+import EditGroupInfoPage from "../pages/EditGroupInfoPage";
 
 import { loader as mainLoader } from "../components/authenticated/main/Main"
 import { loader as groupListLoader } from "../pages/GroupListPage";
@@ -19,6 +20,7 @@ import { action as groupCreationAction } from "../pages/GroupCreationPage";
 import { action as groupJoinAction } from "../pages/GroupJoinPage";
 import { action as newTaskAction } from "../pages/NewTaskPage";
 import { action as editTaskAction } from "../pages/EditGroupTaskPage";
+import { action as editInfoAction } from "../pages/EditGroupInfoPage";
 
 // contains all group related routes
 const groupRoutes = {
@@ -71,6 +73,11 @@ const groupRoutes = {
                             action: editTaskAction
                         }
                     ]
+                },
+                {
+                    path: 'edit',
+                    element: <EditGroupInfoPage />,
+                    action: editInfoAction
                 }
             ]
         }

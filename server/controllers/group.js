@@ -1,10 +1,12 @@
 const jwt = require('jsonwebtoken');
 const dateFns = require('date-fns');
 const bcrypt = require('bcryptjs');
+const fs = require('fs');
 
 const User = require('../models/user');
 const Task = require('../models/task');
 const Group = require('../models/group');
+const { request } = require('http');
 
 //GET
 // gives back all data, that is shown on the group page on front-end
@@ -349,4 +351,33 @@ exports.deleteTask = (req, res, next) => {
             console.log(err);
             return res.status(500).json();
         });
+}
+
+//PATCH
+// updates the given properties of a group
+exports.patchInfo = (req, res, next) => {
+    const { groupId, ...requestData } = req.body;
+
+    if(requestData.password) {
+        bcrypt.hash(requestData.password, 12)
+            .then(hashedPassword => {
+                requestData.password = hashedPassword;
+            })
+    }
+
+    if(req.file) {
+        const fileName = groupId + '.' + req.file.originalname.split('.')[1];
+        fs.writeFileSync(`./images/groups/${fileName}`, req.file.buffer);
+        requestData.image = fileName;
+    }
+
+    Group.findByIdAndUpdate(groupId, { $set: requestData })
+        .then(() => {
+            return res.status(200).json();
+        })
+        .catch(err => {
+            console.log(err);
+            return res.status(500).json({ message: "Couldn't update group data!" });
+        })
+    
 }
