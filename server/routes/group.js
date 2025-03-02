@@ -20,6 +20,7 @@ router.post("/check-daily", groupController.postCheckDaily);
 
 //DELETE
 router.delete("/task", groupController.deleteTask);
+router.delete("/member", groupController.deleteMember);
 
 //PATCH
 router.patch("/info", multer(multer.memoryStorage()).single("image"), groupController.patchInfo);

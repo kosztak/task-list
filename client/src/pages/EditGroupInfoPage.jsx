@@ -1,4 +1,4 @@
-import { Form } from "react-router-dom";
+import { Form, useLoaderData, useNavigate, useParams } from "react-router-dom";
 
 import Input from "../components/ui/inputs/Input";
 import Button from "../components/ui/inputs/Button";
@@ -6,25 +6,69 @@ import axiosInstance from "../utils/axiosInstance";
 
 let globalFile;
 export default function EditGroupInfoPage() {
+    const members = useLoaderData();
+    const params = useParams();
+    const navigate = useNavigate();
 
     function handleFileChange(event) {
         globalFile = event.target.files[0];
     }
 
+    function handleKickOutClick(userId) {
+        axiosInstance.delete(`/group/member?groupId=${params.groupId}&userId=${userId}`)
+            .then(() => {
+                navigate("");
+            })
+            .catch(err => {
+                console.log(err);
+            })
+    }
+
     return(
-        <div className="bg-white rounded-lg p-4 flex flex-col items-stretch gap-8">
-            <p className="text-center text-3xl font-bold">Edit group information</p>
+        <div className="bg-white rounded-lg p-4 flex flex-col items-stretch gap-12">
+            <p className="text-center text-3xl font-bold">Edit group</p>
             <Form method="POST" className="px-8 flex flex-col gap-4">
                 <Input type="file" accept="image/*" onChange={handleFileChange} text="Group image" />
                 <Input type="text" name="name" text="Group name" />
-                <div className="flex justify-stretch gap-4">
+                <div className="flex gap-8">
                     <Input type="password" name="password" text="New password" />
                     <Input type="password" name="password-again" text="New password again" />
                 </div>
-                <Button>Save</Button>
+                <div className="m-auto">
+                    <Button>Save changes</Button>
+                </div>
             </Form>
+            <div className="bg-gray-900 rounded-lg p-4 grid grid-cols-[1fr_1fr] gap-12">
+                {
+                    members.length > 0 ?
+                    members.map(member => 
+                        <div key={member.id} className="flex gap-4">
+                            <div className="bg-white rounded-md px-4 flex justify-between items-center grow">
+                                <p className="text-gray-900 text-lg font-semibold">{member.username}</p>
+                                <p className="text-gray-900 font-semibold">{member.point} pt</p>
+                            </div>
+                            <Button onClick={() => {handleKickOutClick(member.id)}}>Kick out</Button>
+                        </div>
+                    ) :
+                    <p className="text-white text-2xl font-bold text-center col-span-2">There's no members in this group!</p>
+                }
+            </div>
         </div>
     )
+}
+
+export async function loader({ request, params }) {
+    console.log(params.groupId);
+    
+    return axiosInstance.get(`/group/members?groupId=${params.groupId}&omitLeader=${true}`)
+        .then(response => {
+            return response.data.members;
+        })
+        .catch(err => {
+            console.log(err);
+            
+            return Promise.resolve();
+        })
 }
 
 export async function action({ request, params }) {

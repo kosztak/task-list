@@ -15,6 +15,7 @@ import { loader as groupLoader } from "../pages/GroupPage";
 import { loader as newTaskLoader } from "../pages/NewTaskPage";
 import { loader as taskViewPageLoader } from "../pages/GroupTaskViewPage";
 import { loader as taskEditLoader } from "../pages/EditGroupTaskPage";
+import { loader as editInfoLoader } from "../pages/EditGroupInfoPage";
 
 import { action as groupCreationAction } from "../pages/GroupCreationPage";
 import { action as groupJoinAction } from "../pages/GroupJoinPage";
@@ -77,6 +78,7 @@ const groupRoutes = {
                 {
                     path: 'edit',
                     element: <EditGroupInfoPage />,
+                    loader: editInfoLoader,
                     action: editInfoAction
                 }
             ]

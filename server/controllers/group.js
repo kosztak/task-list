@@ -68,16 +68,24 @@ exports.getGroupData = (req, res, next) => {
 
 // gives back data from all group members
 exports.getMembers = (req, res, next) => {
-    const groupId = req.query.groupId;
-
+    const { groupId, omitLeader } = req.query;
+    
     Group.findById(groupId)
         .populate("members.userId", "_id username")
         .then(group => {
-            const formedMembers = group.members.map(member => ({
+            if (!group) {
+                return res.status(500).json();
+            }
+
+            let formedMembers = group.members.map(member => ({
                 id: member.userId._id,
                 username: member.userId.username,
                 point: member.point
             }));
+
+            if(omitLeader) {
+                formedMembers = formedMembers.filter(member => member.id.toString() !== group.leader.toString());
+            }
 
             return res.status(200).json({ members: formedMembers });
         })
@@ -350,6 +358,51 @@ exports.deleteTask = (req, res, next) => {
         .catch(err => {
             console.log(err);
             return res.status(500).json();
+        });
+}
+
+exports.deleteMember = (req, res, next) => {
+    const { groupId, userId } = req.query;
+
+    Group.findById(groupId)
+        .then(group => {
+            if (!group) {
+                return res.status(500).json({ message: 'Group not found' });
+            }
+
+            // Remove the user from the group's members
+            group.members = group.members.filter(member => member.userId.toString() !== userId);
+
+            // Remove the user from all group tasks as a participant
+            group.tasks.dailies.forEach(task => {
+                task.participants = task.participants.filter(participant => participant.userId.toString() !== userId);
+            });
+
+            group.tasks.todos.forEach(task => {
+                task.participants = task.participants.filter(participant => participant.userId.toString() !== userId);
+            });
+
+            return group.save();
+        })
+        .then(() => {
+            return User.findById(userId);
+        })
+        .then(user => {
+            if (!user) {
+                return res.status(404).json({ message: 'User not found' });
+            }
+
+            // Remove the group from the user's group list
+            user.groups = user.groups.filter(group => group.toString() !== groupId);
+
+            return user.save();
+        })
+        .then(() => {
+            return res.status(200).json({ message: 'Member deleted successfully' });
+        })
+        .catch(err => {
+            console.log(err);
+            return res.status(500).json({ message: 'An error occurred' });
         });
 }
 
