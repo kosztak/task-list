@@ -6,7 +6,6 @@ const fs = require('fs');
 const User = require('../models/user');
 const Task = require('../models/task');
 const Group = require('../models/group');
-const { request } = require('http');
 
 //GET
 // gives back all data, that is shown on the group page on front-end
@@ -54,7 +53,8 @@ exports.getGroupData = (req, res, next) => {
                 name: group.name,
                 leader: group.leader,
                 members: formedMembers,
-                tasks: filteredTasks
+                tasks: filteredTasks,
+                ...(group.image && { image: group.image }) // gives back the image property if there is any
             };
 
             return res.status(200).json({ isLeader: (group.leader.toString() === decodedToken.id), group: responseData })

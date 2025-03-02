@@ -16,7 +16,8 @@ const taskStateCheck = require('./utils/task-state-check');
 dotenv.config();
 
 const app = express();
-
+app.use('/images/groups', express.static('images/groups'));
+app.use('/images/users', express.static('images/users'));
 app.use(cors({
     origin: "http://localhost:5173",
     credentials: true

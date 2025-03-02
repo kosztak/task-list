@@ -13,6 +13,8 @@ dist-ssr
 data
 *.local
 *.env
+images/groups/*
+images/users/*
 
 # Editor directories and files
 .vscode/*
