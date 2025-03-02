@@ -20,7 +20,7 @@ export default function GroupInfoPanel({ name, image, leader, isLeader }) {
     return(
         <div className="p-4 flex justify-between">
             <div className="flex items-center gap-4">
-                <img src={`http://localhost:3000/images/groups/${image}`} alt="Picture of group pofile." className="w-28 h-28 rounded-full" />
+                <img src={image? `http://localhost:3000/images/groups/${image}` : groupPic} alt="Picture of group pofile." className="w-28 h-28 rounded-full" />
                 <p className="text-gray-900 text-3xl font-bold">{name}</p>
             </div>
             {isLeader? 

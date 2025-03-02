@@ -16,8 +16,12 @@ const taskStateCheck = require('./utils/task-state-check');
 dotenv.config();
 
 const app = express();
+
+// serve static files from the images directory
 app.use('/images/groups', express.static('images/groups'));
 app.use('/images/users', express.static('images/users'));
+
+// enable CORS for client only
 app.use(cors({
     origin: "http://localhost:5173",
     credentials: true
@@ -27,6 +31,7 @@ app.use(cookieParser());
 
 app.use(bodyParser.urlencoded({ extended: false }));
 
+// register route handlers
 app.use(authRoutes);
 app.use('/user', userRoutes);
 app.use('/task', taskRoutes);
