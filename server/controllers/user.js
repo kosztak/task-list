@@ -252,15 +252,12 @@ exports.postJoinGroup = (req, res, next) => {
 
 //PATCH
 // updates the given properties of a user
-exports.patchInfo = (req, res, next) => {
+exports.patchInfo = async (req, res, next) => {
     const requestData = req.body;
     const decodedToken = jwt.verify(req.cookies.token, process.env.JWT_KEY);
 
     if(requestData.password) {
-        bcrypt.hash(requestData.password, 12)
-            .then(hashedPassword => {
-                hashedPassword;
-            })
+        requestData.password = await bcrypt.hash(requestData.password, 12)
     }
 
     if(req.file) {

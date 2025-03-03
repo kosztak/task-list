@@ -408,14 +408,11 @@ exports.deleteMember = (req, res, next) => {
 
 //PATCH
 // updates the given properties of a group
-exports.patchInfo = (req, res, next) => {
+exports.patchInfo = async (req, res, next) => {
     const { groupId, ...requestData } = req.body;
 
     if(requestData.password) {
-        bcrypt.hash(requestData.password, 12)
-            .then(hashedPassword => {
-                requestData.password = hashedPassword;
-            })
+        requestData.password = await bcrypt.hash(requestData.password, 12)
     }
 
     if(req.file) {
