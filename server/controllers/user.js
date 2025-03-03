@@ -1,12 +1,31 @@
 const jwt = require('jsonwebtoken');
 const dateFns = require('date-fns');
 const bcrypt = require("bcryptjs");
+const fs = require('fs');
 
 const User = require('../models/user');
 const Task = require('../models/task');
 const Group = require('../models/group');
 
 //GET
+exports.getUserData = (req, res, next) => {
+    const decodedToken = jwt.verify(req.cookies.token, process.env.JWT_KEY);
+
+    User.findById(decodedToken.id)
+        .then(user => {
+            const responseData = {
+                name: user.username,
+                ...(user.image && { image: user.image })
+            }            
+
+            return res.status(200).json(responseData);
+        })
+        .catch(err => {
+            console.log(err);
+            return res.status(500).json();
+        });
+}
+
 exports.getDailies = (req, res, next) => {
     const decodedToken = jwt.verify(req.cookies.token, process.env.JWT_KEY);
 
@@ -231,6 +250,35 @@ exports.postJoinGroup = (req, res, next) => {
         });
 }
 
+//PATCH
+// updates the given properties of a user
+exports.patchInfo = (req, res, next) => {
+    const requestData = req.body;
+    const decodedToken = jwt.verify(req.cookies.token, process.env.JWT_KEY);
+
+    if(requestData.password) {
+        bcrypt.hash(requestData.password, 12)
+            .then(hashedPassword => {
+                hashedPassword;
+            })
+    }
+
+    if(req.file) {
+        const fileName = decodedToken.id + '.' + req.file.originalname.split('.')[1];
+        fs.writeFileSync(`./images/users/${fileName}`, req.file.buffer);
+        requestData.image = fileName;
+    }
+
+    User.findByIdAndUpdate(decodedToken.id, { $set: requestData })
+        .then(() => {
+            return res.status(200).json();
+        })
+        .catch(err => {
+            console.log(err);
+            return res.status(500).json({ message: "Couldn't update user data!" });
+        })
+    
+}
 
 //DELETE
 exports.deleteTask = (req, res, next) => {

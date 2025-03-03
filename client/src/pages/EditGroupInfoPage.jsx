@@ -1,10 +1,13 @@
 import { Form, useLoaderData, useNavigate, useParams } from "react-router-dom";
 
-import Input from "../components/ui/inputs/Input";
-import Button from "../components/ui/inputs/Button";
 import axiosInstance from "../utils/axiosInstance";
 
+import Input from "../components/ui/inputs/Input";
+import Button from "../components/ui/inputs/Button";
+
 let globalFile;
+
+// with this component the leader of the group can change information of group
 export default function EditGroupInfoPage() {
     const members = useLoaderData();
     const params = useParams();
@@ -26,6 +29,7 @@ export default function EditGroupInfoPage() {
 
     return(
         <div className="bg-white rounded-lg p-4 flex flex-col items-stretch gap-12">
+            {/* edit info panel */}
             <p className="text-center text-3xl font-bold">Edit group</p>
             <Form method="POST" className="px-8 flex flex-col gap-4">
                 <Input type="file" accept="image/*" onChange={handleFileChange} text="Group image" />
@@ -38,6 +42,7 @@ export default function EditGroupInfoPage() {
                     <Button>Save changes</Button>
                 </div>
             </Form>
+            {/* kick out member panel */}
             <div className="bg-gray-900 rounded-lg p-4 grid grid-cols-[1fr_1fr] gap-12">
                 {
                     members.length > 0 ?
@@ -74,11 +79,7 @@ export async function loader({ request, params }) {
 export async function action({ request, params }) {
     const data = await request.formData();
 
-    if(data.get('password') === data.get('password-again')) {
-        if(globalFile) {
-            data.append('image', globalFile);
-        }
-
+    if(data.get('password') === data.get('password-again')) { // cheks if given passwords are matching
         const requestData = {
             groupId: params.groupId,
             ...(globalFile && { image: globalFile }),
@@ -91,6 +92,8 @@ export async function action({ request, params }) {
                 return Promise.resolve();
             })
             .catch(err => {
+                console.log(err);
+                
                 return Promise.resolve();
             })
     }
