@@ -11,7 +11,7 @@ import profilePic from "../../../assets/misc-icons/profile.png";
 import axiosInstance from "../../../utils/axiosInstance";
 
 // THis component is shown on all authenticated pages. Users can navigate between pages through this component.
-export default function SideBar() {
+export default function SideBar({ userImage }) {
     const navigate = useNavigate();
     const defaultNewTaskCSS = "relative left-16";
 
@@ -30,7 +30,7 @@ export default function SideBar() {
             <div className="flex flex-col items-center gap-2">
                 {/* profile button */}
                 <NavLink to={"/user"} end className={({ isActive }) => isActive? "border-4 border-amber-600 rounded-full [&>*]:w-16 [&>*]:h-16" : ""}>
-                    <img src={profilePic} alt="Profile icon" className="w-20 h-20" />
+                    <img src={userImage? `http://localhost:3000/images/users/${userImage}` : profilePic} alt="Profile icon" className="w-20 h-20 rounded-full" />
                 </NavLink>
                 {/* new task button */}
                 <div className="relative">

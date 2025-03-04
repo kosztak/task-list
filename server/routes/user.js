@@ -8,6 +8,7 @@ const router = express.Router();
 
 //GET
 router.get("/data", userController.getUserData);
+router.get("/image", userController.getImage);
 router.get("/dailies", userController.getDailies);
 router.get("/todos", userController.getTodos);
 router.get("/groups", userController.getGroups);

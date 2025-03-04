@@ -26,6 +26,21 @@ exports.getUserData = (req, res, next) => {
         });
 }
 
+exports.getImage = (req, res, next) => {
+    const decodedToken = jwt.verify(req.cookies.token, process.env.JWT_KEY);
+
+    User.findById(decodedToken.id)
+        .then(user => {
+            console.log(user.image);
+            
+            return res.status(200).json({ image: user.image });
+        })
+        .catch(err => {
+            console.log(err);
+            return res.status(500).json();
+        });
+}
+
 exports.getDailies = (req, res, next) => {
     const decodedToken = jwt.verify(req.cookies.token, process.env.JWT_KEY);
 
