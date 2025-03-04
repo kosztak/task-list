@@ -1,4 +1,5 @@
 import { Form, redirect, useLoaderData } from "react-router-dom";
+import { useEffect, useRef } from "react";
 
 import Input from "../components/ui/inputs/Input";
 import Button from "../components/ui/inputs/Button";
@@ -6,12 +7,19 @@ import Button from "../components/ui/inputs/Button";
 import axiosInstance from "../utils/axiosInstance";
 
 import profilePic from "../assets/misc-icons/profile.png";
+import Alert from "../components/ui/Alert";
 
 let globalFile;
+let alert;
 
 // this component shows all user related information 
 export default function UserInfoPage() {
     const user = useLoaderData();
+    const alertRef = useRef();
+        
+    useEffect(() => {
+        alert = alertRef.current;        
+    }, [alertRef])
     
     function handleFileChange(event) {
         globalFile = event.target.files[0];
@@ -27,6 +35,7 @@ export default function UserInfoPage() {
             <div>
                 <p className="text-center text-3xl font-bold">Edit info</p>
                 <Form method="POST" className="px-8 flex flex-col gap-4">
+                    <Alert ref={alertRef} />
                     <Input type="file" accept="image/*" onChange={handleFileChange} text="Profile image" />
                     <Input type="text" name="username" text="Username" />
                     <div className="flex gap-8">
@@ -67,7 +76,7 @@ export async function action({ request, params }) {
                 return redirect("");
             })
             .catch(err => {
-                console.log(err);
+                alert.show(err.response.data.message);
                 
                 return Promise.resolve();
             })
