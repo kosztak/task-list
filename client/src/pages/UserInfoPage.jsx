@@ -82,6 +82,8 @@ export async function action({ request, params }) {
             })
     }
 
+    alert.show("Given passwords don't match!");
+
     return Promise.resolve();
         
 }

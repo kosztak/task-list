@@ -4,14 +4,21 @@ import axiosInstance from "../utils/axiosInstance";
 
 import Input from "../components/ui/inputs/Input";
 import Button from "../components/ui/inputs/Button";
+import Alert from "../components/ui/Alert";
 
 let globalFile;
+let alert;
 
 // with this component the leader of the group can change information of group
 export default function EditGroupInfoPage() {
     const members = useLoaderData();
     const params = useParams();
     const navigate = useNavigate();
+    const alertRef = useRef();
+            
+    useEffect(() => {
+        alert = alertRef.current;        
+    }, [alertRef])
 
     function handleFileChange(event) {
         globalFile = event.target.files[0];
@@ -32,6 +39,7 @@ export default function EditGroupInfoPage() {
             {/* edit info panel */}
             <p className="text-center text-3xl font-bold">Edit group</p>
             <Form method="POST" className="px-8 flex flex-col gap-4">
+                <Alert ref={alertRef} />
                 <Input type="file" accept="image/*" onChange={handleFileChange} text="Group image" />
                 <Input type="text" name="name" text="Group name" />
                 <div className="flex gap-8">
@@ -92,11 +100,13 @@ export async function action({ request, params }) {
                 return Promise.resolve();
             })
             .catch(err => {
-                console.log(err);
+                alert.show(err.response.data.message);
                 
                 return Promise.resolve();
             })
     }
+
+    alert.show("Given passwords don't match!");
 
     return Promise.resolve();
         

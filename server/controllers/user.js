@@ -31,8 +31,6 @@ exports.getImage = (req, res, next) => {
 
     User.findById(decodedToken.id)
         .then(user => {
-            console.log(user.image);
-            
             return res.status(200).json({ image: user.image });
         })
         .catch(err => {
