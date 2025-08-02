@@ -3,7 +3,7 @@ export default function Input({ text, name, type, value, onChange, required, sty
         <div className="flex flex-col grow" style={style}>
             <label htmlFor={name} className="font-semibold">{text}</label>
             <input
-                className="border-gray-600 border-2 p-1 rounded"
+                className="border-dark border-2 p-1 rounded"
                 name={name}
                 type={type}
                 value={value}

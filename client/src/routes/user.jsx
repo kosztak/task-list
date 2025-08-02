@@ -3,10 +3,10 @@ import TodosPage from "pages/TodosPage";
 import UserInfoPage, { action } from "pages/UserInfoPage";
 import NewTaskPage from "pages/NewTaskPage";
 import EditUserTaskPage from "pages/EditUserTaskPage";
-import Main from "components/authenticated/main/Main";
+import Main from "components/authenticated/Main";
 
 import { loader as userInfoLoader } from "pages/UserInfoPage";
-import { loader as mainLoader } from "components/authenticated/main/Main"
+import { loader as mainLoader } from "components/authenticated/Main"
 import { loader as userDailiesLoader } from "pages/DailiesPage";
 import { loader as userTodosLoader } from "pages/TodosPage";
 import { loader as editUserTaskLoader } from "pages/EditUserTaskPage";

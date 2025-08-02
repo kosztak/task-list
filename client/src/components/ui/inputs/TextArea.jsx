@@ -3,7 +3,7 @@ export default function TextArea({ text, name, style, ...rest }) {
         <div className="flex flex-col" style={style}>
             <label htmlFor={name} className="font-semibold">{text}</label>
             <textarea
-                className="border-gray-600 border-2 p-1 rounded grow"
+                className="border-dark border-2 p-1 rounded grow"
                 name={name}
                 {...rest}
             />

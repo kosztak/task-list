@@ -1,11 +1,11 @@
 import AuthenticationPage from "pages/AuthenticationPage";
-import LoginPanel from "components/unauthenticated/Login";
-import RegisterPanel from "components/unauthenticated/Register";
+import LoginPanel from "components/unauthenticated/LoginPanel";
+import RegisterPanel from "components/unauthenticated/RegisterPanel";
 
 import { loader as authLoader } from "pages/AuthenticationPage";
 
-import { action as loginAction } from "components/unauthenticated/Login";
-import { action as registerAction } from "components/unauthenticated/Register";
+import { action as loginAction } from "components/unauthenticated/LoginPanel";
+import { action as registerAction } from "components/unauthenticated/RegisterPanel";
 
 const authRoutes = {
     path: '/',

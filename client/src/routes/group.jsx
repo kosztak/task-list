@@ -1,4 +1,4 @@
-import Main from "components/authenticated/main/Main";
+import Main from "components/authenticated/Main";
 import GroupListPage from "pages/GroupListPage";
 import GroupCreationPage from "pages/GroupCreationPage";
 import GroupJoinPage from "pages/GroupJoinPage";
@@ -8,7 +8,7 @@ import GroupTaskViewPage from "pages/GroupTaskViewPage";
 import EditGroupTaskPage from "pages/EditGroupTaskPage";
 import EditGroupInfoPage from "pages/EditGroupInfoPage";
 
-import { loader as mainLoader } from "components/authenticated/main/Main"
+import { loader as mainLoader } from "components/authenticated/Main"
 import { loader as groupListLoader } from "pages/GroupListPage";
 import { loader as groupCreationLoader } from "pages/GroupCreationPage";
 import { loader as groupLoader } from "pages/GroupPage";

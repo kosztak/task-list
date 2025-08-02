@@ -10,7 +10,7 @@ export default function Select({ text, name, children, style, defaultValue, ...p
     return(
         <div className="flex flex-col" style={style}>
             <label htmlFor={name} className="font-semibold">{text}</label>
-            <select name={name} value={value} onChange={handleChange} className="bg-white border-gray-600 border-2 p-1 rounded" {...props}>
+            <select name={name} value={value} onChange={handleChange} className="bg-white border-dark border-2 p-1 rounded" {...props}>
                 {children}
             </select>
         </div>

@@ -32,10 +32,10 @@ export default function RegisterPanel() {
     );
 }
 
-export async function action({ request, params }) { // registers a new user
+export async function action({ request, params }) {
     const data = await request.formData();
 
-    if(data.get('password') !== data.get('password-again')) { // check the given passwords 
+    if(data.get('password') !== data.get('password-again')) {
         alert.show("The given passwords don't match!");
 
         return Promise.resolve();

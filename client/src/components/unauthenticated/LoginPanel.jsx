@@ -31,7 +31,7 @@ export default function LoginPanel() {
     );
 }
 
-export async function action({ request, params }) { // logs in the user
+export async function action({ request, params }) {
     const data = await request.formData();
 
     return axiosInstance.post("/login", { username: data.get('username'), password: data.get('password') })
