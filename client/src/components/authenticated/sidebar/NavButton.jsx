@@ -1,6 +1,5 @@
 import { NavLink } from "react-router-dom";
 
-//This component is the navigation button for the sidebar component.
 export default function NavButton({ text, picture, to }) {
     const defaultCSS = "group w-28 p-2 flex flex-col items-center";
 

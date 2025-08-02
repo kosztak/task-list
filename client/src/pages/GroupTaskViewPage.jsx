@@ -1,8 +1,8 @@
 import { useLoaderData, useNavigate, useParams } from "react-router-dom"
 
-import axiosInstance from "../utils/axiosInstance";
+import axiosInstance from "utils/axiosInstance";
 
-import Button from "../components/ui/inputs/Button";
+import Button from "components/ui/inputs/Button";
 
 // On this vomponent the group leader can see a list of all dailies or to-dos.
 export default function GroupTaskViewPage() {

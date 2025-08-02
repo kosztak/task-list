@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import axiosInstance from "../../../utils/axiosInstance";
+import axiosInstance from "utils/axiosInstance";
 import TaskBar from "./TaskBar";
 
 export default function DailyBar({ task, isUser }) {

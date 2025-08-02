@@ -1,18 +1,17 @@
 import { useEffect, useRef } from "react";
 
-import Alert from "../../../ui/Alert";
+import Alert from "components/ui/Alert";
 
-// This component shows the ranking of group members. 
 export default function GroupRankingPanel({ members }) {
     const alertRef = useRef();
 
-    useEffect(() => { // shows alert component, if there's no members
+    useEffect(() => {
         if(!members) {
             alertRef.current.show("There's no members to rank!")
         }
     }, [alertRef, members]);
 
-    function getRankings() { // generates the ranking "cards" for all members of the group
+    function getRankings() {
         members.sort((a, b) => a.point < b.point);
         return members.map((member, index) => 
             <div key={index} className="bg-white p-2 rounded flex justify-between">

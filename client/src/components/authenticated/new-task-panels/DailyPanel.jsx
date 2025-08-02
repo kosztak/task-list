@@ -1,10 +1,9 @@
-import Input from "../../ui/inputs/Input";
-import Option from "../../ui/inputs/select/Option";
-import Select from "../../ui/inputs/select/Select";
-import TextArea from "../../ui/inputs/TextArea";
-import DatePicker from "../../ui/inputs/DatePicker";
+import Input from "components/ui/inputs/Input";
+import Option from "components/ui/inputs/select/Option";
+import Select from "components/ui/inputs/select/Select";
+import TextArea from "components/ui/inputs/TextArea";
+import DatePicker from "components/ui/inputs/DatePicker";
 
-// This component shows the daily related inputs on the new task pages.
 export default function DailyPanel() {
     return(
         <div className="grid gap-4" style={{ gridTemplateAreas: `"name description" "period description" "date gap"` }}>

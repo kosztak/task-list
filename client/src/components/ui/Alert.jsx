@@ -1,15 +1,14 @@
 import { forwardRef, useImperativeHandle, useState } from "react";
 
-// this component can be shown, when an error accures
 const Alert = forwardRef((props, ref) => {
     const [message, setMessage] = useState(null);
     useImperativeHandle(ref, () => ({
-        show: (alertMessage) => { // shows the component
+        show: (alertMessage) => {
             setMessage(alertMessage);
         }
     }));
 
-    function handleCloseAlert() { // hides the component
+    function handleCloseAlert() {
         setMessage(null);
     }
 

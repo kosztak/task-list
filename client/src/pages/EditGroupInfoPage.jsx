@@ -1,10 +1,10 @@
 import { Form, useLoaderData, useNavigate, useParams } from "react-router-dom";
 
-import axiosInstance from "../utils/axiosInstance";
+import axiosInstance from "utils/axiosInstance";
 
-import Input from "../components/ui/inputs/Input";
-import Button from "../components/ui/inputs/Button";
-import Alert from "../components/ui/Alert";
+import Input from "components/ui/inputs/Input";
+import Button from "components/ui/inputs/Button";
+import Alert from "components/ui/Alert";
 
 let globalFile;
 let alert;

@@ -1,7 +1,6 @@
 import { Outlet, redirect } from "react-router-dom";
-import axiosInstance from "../utils/axiosInstance";
+import axiosInstance from "utils/axiosInstance";
 
-// the user can authenticate themself through this component
 export default function AuthenticationPage() {
     return(
         <div className="min-h-screen bg-gray-900 flex flex-col items-center pb-12">
@@ -13,7 +12,7 @@ export default function AuthenticationPage() {
     );
 }
 
-export async function loader() { // check if user already authorized before using the pages
+export async function loader() {
     return axiosInstance.post("/validate-token")
         .then(() => { 
             return redirect("/user/dailies");

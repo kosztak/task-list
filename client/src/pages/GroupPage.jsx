@@ -1,11 +1,11 @@
 import { useLoaderData } from "react-router-dom";
 
-import axiosInstance from "../utils/axiosInstance";
+import axiosInstance from "utils/axiosInstance";
 
-import GroupDailiesPanel from "../components/authenticated/group/group-panels/GroupDailiesPanel";
-import GroupInfoPanel from "../components/authenticated/group/group-panels/groupInfoPanel";
-import GroupRankingPanel from "../components/authenticated/group/group-panels/GroupRankingPanel";
-import GroupTodosPanel from "../components/authenticated/group/group-panels/GroupTodosPanel";
+import GroupDailiesPanel from "components/authenticated/group/group-panels/GroupDailiesPanel";
+import GroupInfoPanel from "components/authenticated/group/group-panels/groupInfoPanel";
+import GroupRankingPanel from "components/authenticated/group/group-panels/GroupRankingPanel";
+import GroupTodosPanel from "components/authenticated/group/group-panels/GroupTodosPanel";
 
 // This component all generic group information to users.
 export default function GroupPage() {

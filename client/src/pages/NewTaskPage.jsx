@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
 import { Form, redirect, useLoaderData } from "react-router-dom";
 
-import RadioButton from "../components/ui/inputs/RadioButton";
-import DailyPanel from "../components/authenticated/new-task-panels/DailyPanel";
-import TodoPanel from "../components/authenticated/new-task-panels/TodoPanel";
-import Button from "../components/ui/inputs/Button";
-import axiosInstance from "../utils/axiosInstance";
-import Checkbox from "../components/ui/inputs/Checkbox";
+import RadioButton from "components/ui/inputs/RadioButton";
+import DailyPanel from "components/authenticated/new-task-panels/DailyPanel";
+import TodoPanel from "components/authenticated/new-task-panels/TodoPanel";
+import Button from "components/ui/inputs/Button";
+import axiosInstance from "utils/axiosInstance";
+import Checkbox from "components/ui/inputs/Checkbox";
 
 let globalIsDaily;
 let globalIsGroupTask;

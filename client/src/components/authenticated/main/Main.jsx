@@ -1,10 +1,9 @@
 import { Outlet, redirect, useLoaderData } from "react-router-dom";
 
-import axiosInstance from "../../../utils/axiosInstance";
+import axiosInstance from "utils/axiosInstance";
 
-import SideBar from "../sidebar/Sidebar";
+import SideBar from "components/authenticated/sidebar/Sidebar";
 
-// This component is shown on all authorized pages. This works as the main frame for most of the pages.
 export default function Main() {
     const image = useLoaderData();
 
@@ -19,7 +18,7 @@ export default function Main() {
     )
 }
 
-export async function loader() { // check if user already authorized before using the pages
+export async function loader() {
     return axiosInstance.post("/validate-token")
         .then(() => {
             return axiosInstance.get("/user/image");

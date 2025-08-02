@@ -1,15 +1,15 @@
 import { Form, useLoaderData, useNavigate, redirect } from "react-router-dom";
 import { useEffect, useRef } from "react";
 
-import Button from "../components/ui/inputs/Button";
-import Input from "../components/ui/inputs/Input";
-import Option from "../components/ui/inputs/select/Option";
-import Select from "../components/ui/inputs/select/Select";
-import TextArea from "../components/ui/inputs/TextArea";
-import DatePicker from "../components/ui/inputs/DatePicker";
-import Alert from "../components/ui/Alert";
+import Button from "components/ui/inputs/Button";
+import Input from "components/ui/inputs/Input";
+import Option from "components/ui/inputs/select/Option";
+import Select from "components/ui/inputs/select/Select";
+import TextArea from "components/ui/inputs/TextArea";
+import DatePicker from "components/ui/inputs/DatePicker";
+import Alert from "components/ui/Alert";
 
-import axiosInstance from "../utils/axiosInstance";
+import axiosInstance from "utils/axiosInstance";
 
 let alert;
 let globalTask;

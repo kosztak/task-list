@@ -1,7 +1,6 @@
 import { Link } from "react-router-dom";
-import groupPic from "../../../assets/misc-icons/default-group.png";
+import groupPic from "assets/misc-icons/default-group.png";
 
-// This components is shown on the group listing page.
 export default function GroupCard({ group }) {
     return(
         <Link to={group.id} className="p-4 rounded-lg border-gray-900 bg-amber-300 border-2 flex justify-between items-center">

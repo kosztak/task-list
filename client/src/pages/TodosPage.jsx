@@ -1,10 +1,10 @@
 import { useLoaderData } from "react-router-dom";
 import { useEffect, useRef } from "react";
 
-import axiosInstance from "../utils/axiosInstance"
+import axiosInstance from "utils/axiosInstance"
 
-import TodoBar from "../components/ui/task-bars/TodoBar";
-import Alert from "../components/ui/Alert";
+import TodoBar from "components/ui/task-bars/TodoBar";
+import Alert from "components/ui/Alert";
 
 export default function TodosPage() {
     const todosList = useLoaderData();

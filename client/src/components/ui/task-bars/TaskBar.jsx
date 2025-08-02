@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 
-import tickPic from "../../../assets/misc-icons/tick.png";
+import tickPic from "assets/misc-icons/tick.png";
 
 //this function helpd to get the correct background color classes for the taskbar corresponding to the given color
 function getColorClasses(color) {

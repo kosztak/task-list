@@ -1,13 +1,13 @@
 import { Form, redirect, useLoaderData } from "react-router-dom";
 import { useEffect, useRef } from "react";
 
-import Input from "../components/ui/inputs/Input";
-import Button from "../components/ui/inputs/Button";
+import Input from "components/ui/inputs/Input";
+import Button from "components/ui/inputs/Button";
 
-import axiosInstance from "../utils/axiosInstance";
+import axiosInstance from "utils/axiosInstance";
 
-import profilePic from "../assets/misc-icons/profile.png";
-import Alert from "../components/ui/Alert";
+import profilePic from "assets/misc-icons/profile.png";
+import Alert from "components/ui/Alert";
 
 let globalFile;
 let alert;

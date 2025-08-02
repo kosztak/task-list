@@ -1,10 +1,10 @@
 import { Link, useLoaderData, useNavigate } from "react-router-dom";
 
-import axiosInstance from "../utils/axiosInstance"
+import axiosInstance from "utils/axiosInstance"
 
-import GroupCard from "../components/authenticated/group/GroupCard";
-import Button from "../components/ui/inputs/Button";
-import PageLink from "../components/ui/PageLink";
+import GroupCard from "components/authenticated/group/GroupCard";
+import Button from "components/ui/inputs/Button";
+import PageLink from "components/ui/PageLink";
 
 // This component lists all groups where ths user is a member or the leader. 
 export default function GroupListPage() {

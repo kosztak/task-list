@@ -1,22 +1,21 @@
 import { useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 
-import TodoBar from "../../../ui/task-bars/TodoBar";
-import Alert from "../../../ui/Alert";
-import Button from "../../../ui/inputs/Button";
+import TodoBar from "components/ui/task-bars/TodoBar";
+import Alert from "components/ui/Alert";
+import Button from "components/ui/inputs/Button";
 
-// This component shows the to-do tasks of a group for every user. Only the participated tasks will appear.
 export default function GroupTodosPanel({ todosList, isLeader }) {
     const navigate = useNavigate();
     const alertRef = useRef();
     
-    useEffect(() => { // show alert component, if no to-do is available
+    useEffect(() => {
             if(todosList === undefined) {
                 alertRef.current.show("Couldn't get dailies!");
             }
         }, [todosList, alertRef])
 
-    function generateTodoList() { // creates a TodoBar component list to show all user related to-dos
+    function generateTodoList() {
         return todosList.map(todo => {
             return (
                 <TodoBar key={todo._id} task={todo.taskId} isUser={false} />
@@ -24,7 +23,7 @@ export default function GroupTodosPanel({ todosList, isLeader }) {
         })
     }
 
-    function handleButtonClick() {// navigates only the leader of the group to a page, where they can see all to-dos of the group
+    function handleButtonClick() {
         navigate("todos");
     }
 

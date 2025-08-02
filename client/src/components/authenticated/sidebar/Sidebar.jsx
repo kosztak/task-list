@@ -2,20 +2,19 @@ import { Link, NavLink, useNavigate } from "react-router-dom";
 
 import NavButton from "./NavButton";
 
-import dailiesPic from "../../../assets/sidepanel-icons/dailies.png";
-import todosPic from "../../../assets/sidepanel-icons/todo.png";
-import groupPic from "../../../assets/sidepanel-icons/group.png";
-import newTaskPic from "../../../assets/sidepanel-icons/new-task.png";
-import logoutPic from "../../../assets/sidepanel-icons/logout.png";
-import profilePic from "../../../assets/misc-icons/profile.png";
-import axiosInstance from "../../../utils/axiosInstance";
+import dailiesPic from "assets/sidepanel-icons/dailies.png";
+import todosPic from "assets/sidepanel-icons/todo.png";
+import groupPic from "assets/sidepanel-icons/group.png";
+import newTaskPic from "assets/sidepanel-icons/new-task.png";
+import logoutPic from "assets/sidepanel-icons/logout.png";
+import profilePic from "assets/misc-icons/profile.png";
+import axiosInstance from "utils/axiosInstance";
 
-// THis component is shown on all authenticated pages. Users can navigate between pages through this component.
 export default function SideBar({ userImage }) {
     const navigate = useNavigate();
     const defaultNewTaskCSS = "relative left-16";
 
-    function handleLogout() { // logs out the user
+    function handleLogout() {
         axiosInstance.post("/logout")
         .then(response => {
             navigate("/");

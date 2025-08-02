@@ -1,10 +1,10 @@
 import { useLoaderData } from "react-router-dom"
 import { useEffect, useRef } from "react";
 
-import axiosInstance from "../utils/axiosInstance"
+import axiosInstance from "utils/axiosInstance"
 
-import DailyBar from "../components/ui/task-bars/DailyBar";
-import Alert from "../components/ui/Alert";
+import DailyBar from "components/ui/task-bars/DailyBar";
+import Alert from "components/ui/Alert";
 
 // This component shows the user's daily tasks
 export default function DailiesPage() {

@@ -1,15 +1,14 @@
 import { useNavigate } from "react-router-dom";
 
-import Button from "../../../ui/inputs/Button";
+import Button from "components/ui/inputs/Button";
 
-import groupPic from "../../../../assets/misc-icons/default-group.png";
-import profilePic from "../../../../assets/misc-icons/profile.png";
+import groupPic from "assets/misc-icons/default-group.png";
+import profilePic from "assets/misc-icons/profile.png";
 
-// This component shows the group related main information to users. If the user is the leader, then they can navigate through this.
 export default function GroupInfoPanel({ name, image, leader, isLeader }) {
     const navigate = useNavigate();
     
-    function handleCreateTaskClick() { // navigates only the leader of the group to the page, where they can create a new task for the group
+    function handleCreateTaskClick() {
         navigate("new-task");
     }
 
