@@ -25,16 +25,16 @@ export default function SideBar({ userImage }) {
     }
 
     return(
-        <div className="sticky top-0 left-0 p-4 h-screen w-32 bg-amber-300 rounded-r-lg flex flex-col items-center justify-between" style={{ gridArea: "sidebar" }}>
+        <div className="sticky top-0 left-0 p-4 h-screen w-32 bg-yellow rounded-r-lg flex flex-col items-center justify-between" style={{ gridArea: "sidebar" }}>
             <div className="flex flex-col items-center gap-2">
                 {/* profile button */}
-                <NavLink to={"/user"} end className={({ isActive }) => isActive? "border-4 border-amber-600 rounded-full [&>*]:w-16 [&>*]:h-16" : ""}>
+                <NavLink to={"/user"} end className={({ isActive }) => isActive? "border-4 border-orange rounded-full [&>*]:w-16 [&>*]:h-16" : ""}>
                     <img src={userImage? `http://localhost:3000/images/users/${userImage}` : profilePic} alt="Profile icon" className="w-20 h-20 rounded-full" />
                 </NavLink>
                 {/* new task button */}
                 <div className="relative">
-                    <NavLink to={"/user/new-task"} className={({ isActive }) => isActive? (defaultNewTaskCSS + " [&>*]:bg-amber-600") : (defaultNewTaskCSS + " [&>*]:bg-amber-300")}>
-                        <img src={newTaskPic} alt="New task icon" className="w-24 h-24 border-[0.8rem] border-gray-900 p-1 rounded-full" />
+                    <NavLink to={"/user/new-task"} className={({ isActive }) => isActive? (defaultNewTaskCSS + " [&>*]:bg-orange") : (defaultNewTaskCSS + " [&>*]:bg-yellow")}>
+                        <img src={newTaskPic} alt="New task icon" className="w-24 h-24 border-[0.8rem] border-dark p-1 rounded-full" />
                     </NavLink>
                 </div>
                 {/* navigation panel */}

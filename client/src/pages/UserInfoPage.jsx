@@ -29,7 +29,7 @@ export default function UserInfoPage() {
         <div className="bg-white rounded-lg p-4 flex flex-col items-stretch gap-8">
             <div className="flex items-center gap-8">
                 <img src={user.image? `http://localhost:3000/images/users/${user.image}` : profilePic} alt="profile picture of user" className="w-32 h-32 rounded-full" />
-                <p className="text-gray-900 text-3xl font-bold">{user.name}</p>
+                <p className="text-dark text-3xl font-bold">{user.name}</p>
             </div>
             {/* edit info panel */}
             <div>

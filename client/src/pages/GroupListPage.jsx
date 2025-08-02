@@ -30,7 +30,7 @@ export default function GroupListPage() {
                 <p className="text-xl font-bold">Your group</p>
                 {ownGroup ? <GroupCard group={ownGroup} /> : 
                     <div className="flex gap-2">
-                        <p className="text-gray-900">You don't have a group yet.</p>
+                        <p className="text-dark">You don't have a group yet.</p>
                         <PageLink to="create">Create your group here.</PageLink>
                     </div>
                 }
@@ -43,7 +43,7 @@ export default function GroupListPage() {
                 </div>
                 {otherGroupsList.length !== 0 ? getOtherGroups() :
                     <div className="flex gap-2">
-                        <p className="text-gray-900">You're not a member of any group.</p>
+                        <p className="text-dark">You're not a member of any group.</p>
                         <PageLink to="join">Join one here.</PageLink>
                     </div>
                 }

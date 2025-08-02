@@ -6,20 +6,20 @@ import tickPic from "assets/misc-icons/tick.png";
 function getColorClasses(color) {
     const colorClasses = {
         red: {
-            button: 'bg-red-400',
-            link: 'bg-red-200'
+            button: 'bg-red-task',
+            link: 'bg-red-task-light'
         },
         yellow: {
-            button: 'bg-yellow-400',
-            link: 'bg-yellow-200'
+            button: 'bg-yellow-task',
+            link: 'bg-yellow-task-light'
         },
         green: {
-            button: 'bg-green-400',
-            link: 'bg-green-200'
+            button: 'bg-green-task',
+            link: 'bg-green-task-light'
         },
         white: {
-            button: 'bg-gray-400',
-            link: 'bg-gray-200'
+            button: 'bg-gray-task',
+            link: 'bg-gray-task-light'
         }
     };
 
@@ -35,18 +35,18 @@ export default function TaskBar({ id, name, description, date, color, onCheck, c
         <div className="flex items-stretch">
             <div className={`${button} p-4 rounded-l-lg flex items-center`}>
                 {checked ?
-                    <div className="bg-gray-100 h-12 w-12 rounded-full p-1 border-4 border-gray-300">
+                    <div className="bg-white h-12 w-12 rounded-full p-1 border-4 border-gray">
                         <img src={tickPic} alt="tick" className="h-8 w-8" />
                     </div> :
-                    <button onClick={onCheck} className={`bg-gray-100 h-12 w-12 rounded-full border-4 border-gray-300 ${!checked && "[&>*]:hover:visible"}`}>
+                    <button onClick={onCheck} className={`bg-white h-12 w-12 rounded-full border-4 border-gray ${!checked && "[&>*]:hover:visible"}`}>
                         <img src={tickPic} alt="tick" className={`h-8 w-8 m-auto ${!checked && "invisible"}`} />
                     </button>
                 }
             </div>
             <Link to={id} className={`${link} p-4 rounded-r-lg flex flex-col gap-2 grow`}>
-                <p className="text-2xl font-semibold text-gray-900">{name}</p>
-                <p className="text-gray-700">{description}</p>
-                <p className="text-right text-gray-500">Due: {date}</p>
+                <p className="text-2xl font-semibold text-dark">{name}</p>
+                <p className="text-gray-dark">{description}</p>
+                <p className="text-right text-gray">Due: {date}</p>
             </Link>
         </div>
     )

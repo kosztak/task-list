@@ -23,8 +23,8 @@ export default function GroupRankingPanel({ members }) {
     }
 
     return(
-        <div className="bg-gray-900 p-4 rounded-lg flex flex-col gap-8">
-            <p className="text-amber-300 text-2xl font-bold text-center">Rankings</p>
+        <div className="bg-dark p-4 rounded-lg flex flex-col gap-8">
+            <p className="text-yellow text-2xl font-bold text-center">Rankings</p>
             <Alert ref={alertRef} />
             {members &&
                 <div className="flex flex-col gap-2">

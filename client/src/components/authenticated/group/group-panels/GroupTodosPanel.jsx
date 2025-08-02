@@ -30,12 +30,12 @@ export default function GroupTodosPanel({ todosList, isLeader }) {
     return(
         <dir className="flex flex-col gap-4 p-0">
             <div className="flex justify-between">
-                <p className="text-gray-900 text-2xl font-bold">To-dos</p>
+                <p className="text-dark text-2xl font-bold">To-dos</p>
                 {isLeader && <Button onClick={handleButtonClick}>View to-dos</Button>}
             </div>
             <Alert ref={alertRef} />
             {(!todosList || todosList.length === 0) ?
-                <p className="text-center text-gray-900 text-lg">You have no to-do tasks</p> :
+                <p className="text-center text-dark text-lg">You have no to-do tasks</p> :
                 <div className="flex flex-col gap-4">
                     {generateTodoList()}
                 </div>

@@ -55,7 +55,7 @@ export default function EditGroupTaskPage() {
             <Alert ref={alertRef} />
             {task &&
                 <>
-                    <p className="text-gray-900 text-2xl font-bold">Editing: {task.name}</p>
+                    <p className="text-dark text-2xl font-bold">Editing: {task.name}</p>
                     <Form method="POST"  className="flex flex-col items-stretch gap-16" >
                         <div className="grid grid-cols-[1fr_1fr] gap-4" style={{ gridTemplateAreas: '"name description" "period description" "date gap" "difficulty difficulty" "participants participants"' }}>
                             <Input type="text" name="name" text="Task Name" style={{ gridArea: "name" }} defaultValue={task.name} />
@@ -68,8 +68,8 @@ export default function EditGroupTaskPage() {
                             <DatePicker text="Start Date" name="date" style={{ gridArea: "date" }} defaultValue={task.date} />
                             {isDaily && <Input text="Every" type="number" name="gap" min="1" defaultValue={task.gap} style={{ gridArea: "gap" }} />}
                             <div style={{ gridArea: "difficulty" }}>
-                                <p className="text-lg font-bold text-gray-900 text-center mb-4">Difficulty</p>
-                                <div className="flex justify-evenly border-2 border-gray-900 p-2 rounded">
+                                <p className="text-lg font-bold text-dark text-center mb-4">Difficulty</p>
+                                <div className="flex justify-evenly border-2 border-dark p-2 rounded">
                                     <RadioButton text="Trivial" type="radio" name="difficulty" value="trivial" defaultChecked={task.difficulty === "trivial"} />
                                     <RadioButton text="Easy" type="radio" name="difficulty" value="easy" defaultChecked={task.difficulty === "easy"} />
                                     <RadioButton text="Medium" type="radio" name="difficulty" value="medium" defaultChecked={task.difficulty === "medium"} />
@@ -77,7 +77,7 @@ export default function EditGroupTaskPage() {
                                 </div>
                             </div>
                             <div style={{ gridArea: "participants" }}>
-                                <p className="text-lg font-bold text-gray-900 text-center mb-4">Participants</p>
+                                <p className="text-lg font-bold text-dark text-center mb-4">Participants</p>
                                 <div>
                                     {
                                         members.map((member, index) => 

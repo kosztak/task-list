@@ -30,7 +30,7 @@ export default function NewTaskPage({ isGroupTask }) {
 
     return(
         <Form method="POST" className="bg-white rounded-lg p-16 flex flex-col items-stretch gap-16">
-            <p className="text-gray-900 text-2xl font-bold">Create new task</p>
+            <p className="text-dark text-2xl font-bold">Create new task</p>
             <div className="flex gap-4">
                 <RadioButton text="Daily" type="radio" name="type" value="daily" onChange={handleTypeChange} defaultChecked />
                 <RadioButton text="To-do" type="radio" name="type" value="todo" onChange={handleTypeChange} />
@@ -39,8 +39,8 @@ export default function NewTaskPage({ isGroupTask }) {
             {isGroupTask &&
                 <>
                     <div>
-                        <p className="text-lg font-bold text-gray-900 text-center mb-4">Difficulty</p>
-                        <div className="flex justify-evenly border-2 border-gray-900 p-2 rounded">
+                        <p className="text-lg font-bold text-dark text-center mb-4">Difficulty</p>
+                        <div className="flex justify-evenly border-2 border-dark p-2 rounded">
                             <RadioButton text="Trivial" type="radio" name="difficulty" value="trivial" defaultChecked />
                             <RadioButton text="Easy" type="radio" name="difficulty" value="easy" />
                             <RadioButton text="Medium" type="radio" name="difficulty" value="medium" />
@@ -48,7 +48,7 @@ export default function NewTaskPage({ isGroupTask }) {
                         </div>
                     </div>
                     <div>
-                        <p className="text-lg font-bold text-gray-900 text-center mb-4">Participants</p>
+                        <p className="text-lg font-bold text-dark text-center mb-4">Participants</p>
                         <div>
                             {
                                 members.map((member, index) => 

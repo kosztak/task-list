@@ -51,14 +51,14 @@ export default function EditGroupInfoPage() {
                 </div>
             </Form>
             {/* kick out member panel */}
-            <div className="bg-gray-900 rounded-lg p-4 grid grid-cols-[1fr_1fr] gap-12">
+            <div className="bg-dark rounded-lg p-4 grid grid-cols-[1fr_1fr] gap-12">
                 {
                     members.length > 0 ?
                     members.map(member => 
                         <div key={member.id} className="flex gap-4">
                             <div className="bg-white rounded-md px-4 flex justify-between items-center grow">
-                                <p className="text-gray-900 text-lg font-semibold">{member.username}</p>
-                                <p className="text-gray-900 font-semibold">{member.point} pt</p>
+                                <p className="text-dark text-lg font-semibold">{member.username}</p>
+                                <p className="text-dark font-semibold">{member.point} pt</p>
                             </div>
                             <Button onClick={() => {handleKickOutClick(member.id)}}>Kick out</Button>
                         </div>

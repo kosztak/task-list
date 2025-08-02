@@ -17,7 +17,7 @@ export default function GroupTaskViewPage() {
     function getTaskList() { // generates a list for the tasks
         return taskDataList.map((task) => 
             <div key={task.id} className="flex gap-2 justify-between">
-                <div className="grid gap-2 border-gray-900 border-2 rounded p-2 grow">
+                <div className="grid gap-2 border-dark border-2 rounded p-2 grow">
                     <p >Name: {task.name}</p>
                     <p >Description: {task.description}</p>
                     <p >{isDaily? 'Start: ' : 'Due: '} {task.date.split('T')[0]}</p>
@@ -37,7 +37,7 @@ export default function GroupTaskViewPage() {
 
     return(
         <div className="bg-white rounded-lg p-4 flex flex-col gap-8">
-            <p className="text-gray-900 text-2xl font-bold">Group {isDaily? 'dailies' : 'to-dos'}</p>
+            <p className="text-dark text-2xl font-bold">Group {isDaily? 'dailies' : 'to-dos'}</p>
             { getTaskList() }
         </div>
     )

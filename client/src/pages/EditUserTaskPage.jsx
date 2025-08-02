@@ -52,7 +52,7 @@ export default function EditTaskPage() {
             <Alert ref={alertRef} />
             {task &&
                 <>
-                    <p className="text-gray-900 text-2xl font-bold">Editing: {task.name}</p>
+                    <p className="text-dark text-2xl font-bold">Editing: {task.name}</p>
                     <Form method="POST"  className="flex flex-col items-start gap-16" >
                         <div className="grid grid-cols-[1fr_1fr] gap-4" style={{ gridTemplateAreas: `"name description" "period description" "date gap"` }}>
                             <Input type="text" name="name" text="Task Name" style={{ gridArea: "name" }} defaultValue={task.name} />
