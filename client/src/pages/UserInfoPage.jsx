@@ -6,13 +6,12 @@ import Button from "components/ui/inputs/Button";
 
 import axiosInstance from "utils/axiosInstance";
 
-import profilePic from "assets/misc-icons/profile.png";
+import ProfileIcon from "components/ui/icons/ProfileIcon";
 import Alert from "components/ui/Alert";
 
 let globalFile;
 let alert;
 
-// this component shows all user related information 
 export default function UserInfoPage() {
     const user = useLoaderData();
     const alertRef = useRef();
@@ -28,10 +27,15 @@ export default function UserInfoPage() {
     return(
         <div className="bg-white rounded-lg p-4 flex flex-col items-stretch gap-8">
             <div className="flex items-center gap-8">
-                <img src={user.image? `http://localhost:3000/images/users/${user.image}` : profilePic} alt="profile picture of user" className="w-32 h-32 rounded-full" />
+                {user.image ?
+                    <figure className="w-32 h-32">
+                        <img src={`http://localhost:3000/images/users/${user.image}`} alt="Profile picture of user" className="!h-full !w-full object-cover rounded-full" />
+                    </figure> :
+                    <ProfileIcon className="w-32 h-32" />
+                }
                 <p className="text-dark text-3xl font-bold">{user.name}</p>
             </div>
-            {/* edit info panel */}
+
             <div>
                 <p className="text-center text-3xl font-bold">Edit info</p>
                 <Form method="POST" className="px-8 flex flex-col gap-4">
@@ -64,7 +68,7 @@ export async function loader({ request, params }) {
 export async function action({ request, params }) {
     const data = await request.formData();
 
-    if(data.get('password') === data.get('password-again')) { // cheks if given passwords are matching
+    if(data.get('password') === data.get('password-again')) {
         const requestData = {
             ...(globalFile && { image: globalFile }),
             ...(data.get('username') !== '' && { username: data.get('username') }),

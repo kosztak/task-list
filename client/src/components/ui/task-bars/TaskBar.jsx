@@ -1,8 +1,7 @@
 import { Link } from "react-router-dom";
 
-import tickPic from "assets/misc-icons/tick.png";
+import TickIcon from "../icons/TickIcon";
 
-//this function helpd to get the correct background color classes for the taskbar corresponding to the given color
 function getColorClasses(color) {
     const colorClasses = {
         red: {
@@ -36,10 +35,10 @@ export default function TaskBar({ id, name, description, date, color, onCheck, c
             <div className={`${button} p-4 rounded-l-lg flex items-center`}>
                 {checked ?
                     <div className="bg-white h-12 w-12 rounded-full p-1 border-4 border-gray">
-                        <img src={tickPic} alt="tick" className="h-8 w-8" />
+                        <TickIcon width="150" height="150" />
                     </div> :
                     <button onClick={onCheck} className={`bg-white h-12 w-12 rounded-full border-4 border-gray ${!checked && "[&>*]:hover:visible"}`}>
-                        <img src={tickPic} alt="tick" className={`h-8 w-8 m-auto ${!checked && "invisible"}`} />
+                        <TickIcon className={`h-8 w-8 m-auto ${!checked && "invisible"}`} />
                     </button>
                 }
             </div>
