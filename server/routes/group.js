@@ -1,7 +1,7 @@
-const express = require('express');
-const multer = require('multer');
+const express = require("express");
+const multer = require("multer");
 
-const groupController = require('../controllers/group');
+const groupController = require("../controllers/group");
 
 const router = express.Router();
 
@@ -23,6 +23,10 @@ router.delete("/task", groupController.deleteTask);
 router.delete("/member", groupController.deleteMember);
 
 //PATCH
-router.patch("/info", multer(multer.memoryStorage()).single("image"), groupController.patchInfo);
+router.patch(
+  "/info",
+  multer(multer.memoryStorage()).single("image"),
+  groupController.patchInfo,
+);
 
 module.exports = router;

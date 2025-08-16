@@ -16,103 +16,156 @@ let globalTask;
 
 // With this component the user can edit or delete their components.
 export default function EditTaskPage() {
-    const navigate = useNavigate();
-    const alertRef = useRef();
-    const task = useLoaderData();
-    const isDaily = (task === undefined || task.renewel !== undefined);
+  const navigate = useNavigate();
+  const alertRef = useRef();
+  const task = useLoaderData();
+  const isDaily = task === undefined || task.renewel !== undefined;
 
-    useEffect(() => {
-        alert = alertRef.current;
-    }, [alertRef])
+  useEffect(() => {
+    alert = alertRef.current;
+  }, [alertRef]);
 
-    useEffect(() => {
-        globalTask = task;
-    }, [task])
+  useEffect(() => {
+    globalTask = task;
+  }, [task]);
 
-    useEffect(() => {
-        if(task === undefined) {
-            alertRef.current.show("Couldn't load task data!");
-        }
-    }, [task, alertRef])
-
-    function handleTaskDelete() { // deletes task on back-end
-        axiosInstance.delete(`/user/task?taskId=${task._id}&isDaily=${isDaily}`)
-            .then(() => {
-                navigate(`/user/${isDaily? "dailies" : "todos"}`);
-            })
-            .catch(err=> {
-                console.log(err);
-                
-                return Promise.resolve();
-            })
+  useEffect(() => {
+    if (task === undefined) {
+      alertRef.current.show("Couldn't load task data!");
     }
+  }, [task, alertRef]);
 
-    return(
-        <div className="bg-white rounded-lg p-8 flex flex-col items-stretch gap-8">
-            <Alert ref={alertRef} />
-            {task &&
-                <>
-                    <p className="text-dark text-2xl font-bold">Editing: {task.name}</p>
-                    <Form method="POST"  className="flex flex-col items-start gap-16" >
-                        <div className="grid grid-cols-[1fr_1fr] gap-4" style={{ gridTemplateAreas: `"name description" "period description" "date gap"` }}>
-                            <Input type="text" name="name" text="Task Name" style={{ gridArea: "name" }} defaultValue={task.name} />
-                            <TextArea text="Task Description" name="description" style={{ gridArea: "description" }} defaultValue={task.description} />
-                            {isDaily && <Select text="Period" name="period" style={{ gridArea: "period" }} defaultValue={task.renewel.period}>
-                                <Option value="day">Day</Option>
-                                <Option value="week">Week</Option>
-                                <Option value="month">Month</Option>
-                            </Select>}
-                            <DatePicker text="Start Date" name="date" style={{ gridArea: "date" }} defaultValue={task.date} />
-                            {isDaily && <Input text="Every" type="number" name="gap" min="1" defaultValue={task.renewel.gap} style={{ gridArea: "gap" }} />}
-                        </div>
-                        <div className="flex gap-4">
-                            <Button type="submit">Save</Button>
-                            <Button type="button" onClick={handleTaskDelete}>Delete</Button>
-                        </div>
-                    </Form>
-                </>
-            }
-        </div>
-    )
+  function handleTaskDelete() {
+    // deletes task on back-end
+    axiosInstance
+      .delete(`/user/task?taskId=${task._id}&isDaily=${isDaily}`)
+      .then(() => {
+        navigate(`/user/${isDaily ? "dailies" : "todos"}`);
+      })
+      .catch((err) => {
+        console.log(err);
+
+        return Promise.resolve();
+      });
+  }
+
+  return (
+    <div className="bg-white rounded-lg p-8 flex flex-col items-stretch gap-8">
+      <Alert ref={alertRef} />
+      {task && (
+        <>
+          <p className="text-dark text-2xl font-bold">Editing: {task.name}</p>
+          <Form method="POST" className="flex flex-col items-start gap-16">
+            <div
+              className="grid grid-cols-[1fr_1fr] gap-4"
+              style={{
+                gridTemplateAreas: `"name description" "period description" "date gap"`,
+              }}
+            >
+              <Input
+                type="text"
+                name="name"
+                text="Task Name"
+                style={{ gridArea: "name" }}
+                defaultValue={task.name}
+              />
+              <TextArea
+                text="Task Description"
+                name="description"
+                style={{ gridArea: "description" }}
+                defaultValue={task.description}
+              />
+              {isDaily && (
+                <Select
+                  text="Period"
+                  name="period"
+                  style={{ gridArea: "period" }}
+                  defaultValue={task.renewel.period}
+                >
+                  <Option value="day">Day</Option>
+                  <Option value="week">Week</Option>
+                  <Option value="month">Month</Option>
+                </Select>
+              )}
+              <DatePicker
+                text="Start Date"
+                name="date"
+                style={{ gridArea: "date" }}
+                defaultValue={task.date}
+              />
+              {isDaily && (
+                <Input
+                  text="Every"
+                  type="number"
+                  name="gap"
+                  min="1"
+                  defaultValue={task.renewel.gap}
+                  style={{ gridArea: "gap" }}
+                />
+              )}
+            </div>
+            <div className="flex gap-4">
+              <Button type="submit">Save</Button>
+              <Button type="button" onClick={handleTaskDelete}>
+                Delete
+              </Button>
+            </div>
+          </Form>
+        </>
+      )}
+    </div>
+  );
 }
 
-export async function loader({ request, params }) { // loads all task data
-    return axiosInstance.get(`/task/user-data?taskId=${params.taskId}`)
-        .then(task => {
-            return task.data;
-        })
-        .catch(err => {
-            console.log(err);
-            
-            return Promise.resolve();
-        })
+export async function loader({ request, params }) {
+  // loads all task data
+  return axiosInstance
+    .get(`/task/user-data?taskId=${params.taskId}`)
+    .then((task) => {
+      return task.data;
+    })
+    .catch((err) => {
+      console.log(err);
+
+      return Promise.resolve();
+    });
 }
 
 export async function action({ request, params }) {
-    const data = await request.formData();
+  const data = await request.formData();
 
-    let responseData = {
-        _id: globalTask._id,
-        ...(globalTask.name !== data.get('name') && {name: data.get('name')}),
-        ...(globalTask.description !== data.get('description') && {description: data.get('description')}),
-        ...(globalTask.date.split('T')[0] !== data.get('date') && {date: data.get('date')})
-    }
+  let responseData = {
+    _id: globalTask._id,
+    ...(globalTask.name !== data.get("name") && { name: data.get("name") }),
+    ...(globalTask.description !== data.get("description") && {
+      description: data.get("description"),
+    }),
+    ...(globalTask.date.split("T")[0] !== data.get("date") && {
+      date: data.get("date"),
+    }),
+  };
 
-    if(globalTask.renewel) { // overrides the renewel property of task, if it is a daily
-        responseData = {
-            ...responseData,
-            ...((globalTask.renewel.period !== data.get('period')) && {"renewel.period": data.get('period')}),
-            ...((globalTask.renewel.gap !== parseInt(data.get('gap'))) && {"renewel.gap": data.get('gap')})
-        }
-    }
-        
-    return axiosInstance.patch('/user-task', responseData)
-        .then(() => { 
-            return redirect(''); // refreshes current page
-        })
-        .catch(err => {
-            alert.show(err.response.data.message);
-            
-            return Promise.resolve();
-        })
+  if (globalTask.renewel) {
+    // overrides the renewel property of task, if it is a daily
+    responseData = {
+      ...responseData,
+      ...(globalTask.renewel.period !== data.get("period") && {
+        "renewel.period": data.get("period"),
+      }),
+      ...(globalTask.renewel.gap !== parseInt(data.get("gap")) && {
+        "renewel.gap": data.get("gap"),
+      }),
+    };
+  }
+
+  return axiosInstance
+    .patch("/user-task", responseData)
+    .then(() => {
+      return redirect(""); // refreshes current page
+    })
+    .catch((err) => {
+      alert.show(err.response.data.message);
+
+      return Promise.resolve();
+    });
 }

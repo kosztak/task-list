@@ -1,8 +1,8 @@
-const express = require('express');
-const multer = require('multer');
+const express = require("express");
+const multer = require("multer");
 
-const userController = require('../controllers/user');
-const user = require('../models/user');
+const userController = require("../controllers/user");
+const user = require("../models/user");
 
 const router = express.Router();
 
@@ -21,7 +21,11 @@ router.post("/check-daily", userController.postCheckDaily);
 router.post("/join-group", userController.postJoinGroup);
 
 //PATCH
-router.patch("/info", multer(multer.memoryStorage()).single("image"), userController.patchInfo);
+router.patch(
+  "/info",
+  multer(multer.memoryStorage()).single("image"),
+  userController.patchInfo,
+);
 
 //DELETE
 router.delete("/task", userController.deleteTask);

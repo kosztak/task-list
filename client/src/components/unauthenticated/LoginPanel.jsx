@@ -11,36 +11,40 @@ import Alert from "components/ui/Alert";
 let alert;
 
 export default function LoginPanel() {
-    const alertRef = useRef();
+  const alertRef = useRef();
 
-    useEffect(() => {
-        alert = alertRef.current;        
-    }, [alertRef])
+  useEffect(() => {
+    alert = alertRef.current;
+  }, [alertRef]);
 
-    return(
-        <Form method="POST" className="flex flex-col gap-12 items-center" >
-            <p className="text-center text-3xl">Login to your account</p>
-            <div className="flex flex-col gap-2 w-2/3">
-                <Alert ref={alertRef} />
-                <Input type="text" name="username" required text="Username" />
-                <Input type="password" name="password" required text="Password" />
-            </div>
-            <Button>Login</Button>
-            <PageLink to={'/register'}>You don't have an account yet?</PageLink>
-        </Form>
-    );
+  return (
+    <Form method="POST" className="flex flex-col gap-12 items-center">
+      <p className="text-center text-3xl">Login to your account</p>
+      <div className="flex flex-col gap-2 w-2/3">
+        <Alert ref={alertRef} />
+        <Input type="text" name="username" required text="Username" />
+        <Input type="password" name="password" required text="Password" />
+      </div>
+      <Button>Login</Button>
+      <PageLink to={"/register"}>You don't have an account yet?</PageLink>
+    </Form>
+  );
 }
 
 export async function action({ request, params }) {
-    const data = await request.formData();
+  const data = await request.formData();
 
-    return axiosInstance.post("/login", { username: data.get('username'), password: data.get('password') })
-    .then(response => {
-        return redirect('/user');
+  return axiosInstance
+    .post("/login", {
+      username: data.get("username"),
+      password: data.get("password"),
     })
-    .catch(err => {        
-        alert.show(err.response.data.message);
-        
-        return Promise.resolve();
+    .then((response) => {
+      return redirect("/user");
     })
+    .catch((err) => {
+      alert.show(err.response.data.message);
+
+      return Promise.resolve();
+    });
 }
